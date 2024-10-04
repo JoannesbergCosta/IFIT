@@ -14,7 +14,7 @@ class User(models.Model):
         verbose_name="Matrícula",
         validators=[MinValueValidator(10000000000000), MaxValueValidator(99999999999999)]
     )
-    #email = models...
+    #email =
     campo = models.ForeignKey(Campo, on_delete=models.PROTECT)
     nome = models.CharField(max_length=100)
 

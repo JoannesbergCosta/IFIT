@@ -35,3 +35,7 @@ class RegisterView(TemplateView):
             login(request, user)  # Faz login automático do usuário
             return redirect('inicio')  # Redireciona para a página inicial
         return render(request, self.template_name, {'form': form})  # Retorna ao template em caso de erro
+
+
+
+
