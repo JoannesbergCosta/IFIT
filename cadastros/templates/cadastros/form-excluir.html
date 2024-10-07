@@ -8,14 +8,21 @@
 </head>
 <body>
     <div class="container mt-5">
-        <h2>Criar Registro</h2>
+        <h2>Excluir Registros</h2>
+        <p>
+            Confirme para excluir o registro definitivamente
+        </p>
         <form method="POST" novalidate>
+
+            <p>
+                Deseja excluir o registro: <b>{{ object }} ?</b>
+            </p>
 
             {% csrf_token %}
 
             {{ form.as_p }}  <!-- Isso renderiza o formulário como parágrafos HTML -->
 
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="submit" class="btn btn-danger">Excluir</button>
         </form>
     </div>
 </body>
