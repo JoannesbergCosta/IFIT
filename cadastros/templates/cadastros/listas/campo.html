@@ -1,0 +1,29 @@
+{% extends 'paginas/index.html' %}
+
+{% load static %}
+
+{% block conteudo %}
+<h3>
+    Lista de Campos Registrados 
+</h3>
+<hr>
+<div class="table-responsive">
+
+</div>
+<table class="table table-striped">
+    <tr>
+        <th>Nome</th>
+        <th>Matricula</th>
+        <th>Campo</th>
+    </tr>
+
+
+    {% for campo in object_list %}
+
+    {% empty %}
+    <tr>
+        <td colspan="3">Nenhum campo resgistrado.</td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

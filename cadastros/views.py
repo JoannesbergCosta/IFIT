@@ -1,4 +1,5 @@
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.views.generic.list import ListView
 from .models import Campo, User
 from django.urls import reverse_lazy
 
@@ -44,3 +45,14 @@ class UserDelete(DeleteView):
     model = User
     template_name = 'cadastros/form-excluir.html'
     success_url = reverse_lazy('inicio')
+
+
+############################## ListView ##################################
+class CampoList(ListView):
+    model = Campo
+    template_name = 'cadastros/listas/campo.html'
+
+
+class UserList(ListView):
+    model = User
+    template_name = 'cadastros/listas/user.html'

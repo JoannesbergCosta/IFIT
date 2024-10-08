@@ -9,7 +9,7 @@ from .forms import LoginForm
 
 # View para a página inicial
 class IndexView(TemplateView):
-    template_name = "index.html"
+    template_name = "paginas/index.html"
 
 # View para a página "Sobre"
 class SobreView(TemplateView):
