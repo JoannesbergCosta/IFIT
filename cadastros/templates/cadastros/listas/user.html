@@ -1,11 +1,38 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    olaaa mundiioioio
-</body>
-</html>
+{% extends 'paginas/index.html' %}
+
+{% load static %}
+
+{% block conteudo %}
+<h3>
+    Lista de User Registrados 
+</h3>
+<hr>
+<div class="table-responsive">
+
+</div>
+<table class="table table-striped">
+    <tr>
+        <th>ID</th> <!--SO TESTE-->
+        <th>Nome</th>
+        <th>Matricula</th>
+        <th>Opções</th>
+    </tr>
+
+
+    {% for user in object_list %}
+    <tr>
+        <td>{{ user.pk }}</td>
+       <td>{{ user.nome }}</td>
+       <td>{{ user.matricula }}</td>
+       <td>
+        Editar
+        Excluir
+       </td> 
+    </tr>
+    {% empty %}
+    <tr>
+        <td colspan="3">Nenhum User resgistrado.</td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

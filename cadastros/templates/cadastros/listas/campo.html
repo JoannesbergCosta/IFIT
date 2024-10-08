@@ -13,13 +13,18 @@
 <table class="table table-striped">
     <tr>
         <th>Nome</th>
-        <th>Matricula</th>
         <th>Campo</th>
     </tr>
 
 
     {% for campo in object_list %}
-
+    <tr>
+       <td>{{ campo.nome }}</td>
+       <td>
+        Editar
+        Excluir
+       </td> 
+    </tr>
     {% empty %}
     <tr>
         <td colspan="3">Nenhum campo resgistrado.</td>
