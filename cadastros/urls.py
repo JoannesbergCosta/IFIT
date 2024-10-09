@@ -11,12 +11,12 @@ urlpatterns = [
     path('cadastrar/user/', UserCreate.as_view(), name="cadastrar-user"),
 
     path('editar/campo/<int:pk>/', CampoUpdate.as_view(), name="editar-campo"),
-    path('editar/user/<int:pk>/', UserUpdate.as_view(), name="editar-user"),
+    path('editar/user/<int:pk>/', UserUpdate.as_view(), name='editar-user'),
 
-    path('excluir/campo/<int:pk>/', CampoDelete.as_view(), name="excluir-campo"),
-    path('excluir/user/<int:pk>/', UserDelete.as_view(), name="excluir-user"),
+    path('excluir/campo/<int:pk>/', CampoDelete.as_view(), name='excluir-campo'),
+    path('excluir/user/<int:pk>/', UserDelete.as_view(), name='excluir-user'),
 
-    path('listar/campos/', CampoList.as_view(), name="listar-campos"),
-    path('listar/users/', UserList.as_view(), name="listar-users"),
+    path('listar/campos/', CampoList.as_view(), name='listar-campos'),
+    path('listar/users/', UserList.as_view(), name='listar-users'),
    
 ]

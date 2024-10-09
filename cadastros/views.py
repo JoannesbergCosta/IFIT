@@ -9,14 +9,14 @@ class CampoCreate(CreateView):
     model = Campo
     fields = ['nome'] #COLOCAR OQUE QUER Q APAREÇA
     template_name = 'cadastros/form.html'
-    success_url = reverse_lazy('inicio')
+    success_url = reverse_lazy('listar-campos')
 
 
 class UserCreate(CreateView):
     model = User
     fields = ['matricula', 'campo', 'nome']
     template_name = 'cadastros/form.html'
-    success_url = reverse_lazy('inicio')
+    success_url = reverse_lazy('listar-users')
 
 
 ############################## Update ###################################
@@ -24,27 +24,27 @@ class CampoUpdate(UpdateView):
     model = Campo
     fields = ['nome'] #COLOCAR OQUE QUER Q APAREÇA
     template_name = 'cadastros/form.html'
-    success_url = reverse_lazy('inicio')
+    success_url = reverse_lazy('listar-campos')
 
 
 class UserUpdate(UpdateView):
     model = User
     fields = ['matricula','campo','nome'] #COLOCAR OQUE QUER Q APAREÇA
     template_name = 'cadastros/form.html'
-    success_url = reverse_lazy('inicio')
+    success_url = reverse_lazy('listar-users')
 
 
 ############################## Delete ###################################
 class CampoDelete(DeleteView):
     model = Campo
     template_name = 'cadastros/form-excluir.html'
-    success_url = reverse_lazy('inicio')
+    success_url = reverse_lazy('listar-campos')
 
 
 class UserDelete(DeleteView):
     model = User
     template_name = 'cadastros/form-excluir.html'
-    success_url = reverse_lazy('inicio')
+    success_url = reverse_lazy('listar-users')
 
 
 ############################## ListView ##################################
