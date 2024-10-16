@@ -1,6 +1,6 @@
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic.list import ListView
-from .models import Campo, User
+from .models import Campo, User, Exercicio, Training, TrainingExercicio
 from django.urls import reverse_lazy
 
 # views
@@ -15,6 +15,13 @@ class CampoCreate(CreateView):
 class UserCreate(CreateView):
     model = User
     fields = ['matricula', 'campo', 'nome']
+    template_name = 'cadastros/form.html'
+    success_url = reverse_lazy('listar-users')
+
+
+class ExercicioCreate(CreateView):
+    model = Exercicio
+    fields = ['exercicio', 'tipo', 'grupo', 'descricao']
     template_name = 'cadastros/form.html'
     success_url = reverse_lazy('listar-users')
 

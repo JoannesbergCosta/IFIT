@@ -1,21 +1,25 @@
+{% csrf_token %}
+
+{% load crispy_forms_tags %}
+
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User Form</title>
+    <title>Cadastrar User</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
     <div class="container mt-5">
-        <h2>Criar Registro</h2>
+        <h2>Editar Registro</h2>
         <form method="POST" novalidate>
 
             {% csrf_token %}
 
-            {{ form.as_p }}  <!-- Isso renderiza o formulário como parágrafos HTML -->
+            {{ form|crispy }}  <!-- Isso renderiza o formulário como parágrafos HTML -->
 
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="submit" class="btn btn-primary">Cadastrar</button>
         </form>
     </div>
 </body>

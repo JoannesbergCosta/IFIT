@@ -6,23 +6,28 @@
 <h3>
     Lista de Campos Registrados 
 </h3>
+<a href="{% url 'cadastrar-campo' %}" class="btn btn-primary btn-sm">Adicionar Campo</a>
 <hr>
 <div class="table-responsive">
 
 </div>
 <table class="table table-striped">
     <tr>
+        <th>ID</th>
         <th>Nome</th>
         <th>Campo</th>
+        <th>Opções</th>
     </tr>
 
 
     {% for campo in object_list %}
     <tr>
+        <td>{{ campo.pk }}</td>
        <td>{{ campo.nome }}</td>
+       <td>{{ campo.campo }}</td>
        <td>
-        Editar
-        Excluir
+            <a href="{% url 'editar-campo' campo.pk %}" class="btn btn-warning btn-sm" title="Editar">Editar</a>
+            <a href="{% url 'excluir-campo' campo.pk %}" class="btn btn-danger btn-sm" title="Excluir">Excluir</a>
        </td> 
     </tr>
     {% empty %}
