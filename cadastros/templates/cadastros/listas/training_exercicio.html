@@ -1,0 +1,45 @@
+{% extends 'paginas/index.html' %}
+
+{% load static %}
+
+{% block conteudo %}
+<h3>
+    Programas de treino 
+</h3>
+
+<a href="{% url 'cadastrar-training-exercicio' %}" class="btn btn-primary btn-sm">Cadastrar um novo Programa de Treino</a>
+<hr>
+<div class="table-responsive">
+
+</div>
+<table class="table table-striped">
+    <tr>
+        <th>ID</th> <!--SO TESTE-->
+        <th>Exercicio</th>
+        <th>Series</th>
+        <th>Repetições</th>
+        <th>Carga</th>
+        <th>Descanso</th>
+    </tr>
+
+
+    {% for training_exercicio in object_list %}
+    <tr>
+        <td>{{ training_exercicio.pk }}</td>
+       <td>{{ training_exercicio.exercise }}</td>
+       <td>{{ training_exercicio.series }}</td>
+       <td>{{ training_exercicio.repeticoes }}</td>
+       <td>{{ training_exercicio.carga }}</td>
+       <td>{{ training_exercicio.descanso }}</td>
+       <td>
+            <a href="{% url 'editar-training-exercicio' training_exercicio.pk %}" class="btn btn-warning btn-sm" title="Editar">Editar</a>
+            <a href="{% url 'excluir-training-exercicio' training_exercicio.pk %}" class="btn btn-danger btn-sm" title="Excluir">Excluir</a>
+       </td> 
+    </tr>
+    {% empty %}
+    <tr>
+        <td colspan="3">PT.</td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

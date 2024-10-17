@@ -1,0 +1,41 @@
+{% extends 'paginas/index.html' %}
+
+{% load static %}
+
+{% block conteudo %}
+<h3>
+    Exercicios
+</h3>
+
+<a href="{% url 'cadastrar-exercicio' %}" class="btn btn-primary btn-sm">Adicionar Exercicio</a>
+<hr>
+<div class="table-responsive">
+
+</div>
+<table class="table table-striped">
+    <tr>
+        <th>ID</th> <!--SO TESTE-->
+        <th>Exercicio</th>
+        <th>Tipo</th>
+        <th>Grupo</th>
+        <th>Descrição</th>
+    </tr>
+    {% for exercicio in object_list %}
+    <tr>
+        <td>{{ exercicio.pk }}</td>
+       <td>{{ exercicio.exercicio }}</td>
+       <td>{{ exercicio.tipo }}</td>
+       <td>{{ exercicio.grupo }}</td>
+       <td>{{ exercicio.descricao }}</td>
+       <td>
+            <a href="{% url 'editar-exercicio' exercicio.pk %}" class="btn btn-warning btn-sm" title="Editar">Editar</a>
+            <a href="{% url 'excluir-exercicio' exercicio.pk %}" class="btn btn-danger btn-sm" title="Excluir">Excluir</a>
+       </td> 
+    </tr>
+    {% empty %}
+    <tr>
+        <td colspan="3">Nenhum Exercicio resgistrado.</td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}
