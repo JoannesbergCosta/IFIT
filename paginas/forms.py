@@ -1,21 +1,28 @@
-# myproject/paginas/forms.py
-
 from django import forms
 from django.contrib.auth.forms import AuthenticationForm
+from cadastros.models import TrainingExercicio  # Importar do app correto
+
+class TrainingExercicioForm(forms.ModelForm):
+    class Meta:
+        model = TrainingExercicio
+        fields = ['descricao', 'exercises', 'series', 'repeticoes', 'carga', 'descanso']
+        widgets = {
+            'exercises': forms.CheckboxSelectMultiple,
+        }
 
 class LoginForm(AuthenticationForm):
     username = forms.CharField(
-        label='Usuário',  # Rótulo para o campo de nome de usuário
+        label='Usuário',
         widget=forms.TextInput(attrs={
-            'class': 'form-control',  # Adiciona a classe do Bootstrap
-            'placeholder': 'Digite seu usuário',  # Placeholder para o campo
+            'class': 'form-control',
+            'placeholder': 'Digite seu usuário',
         })
     )
     
     password = forms.CharField(
-        label='Senha',  # Rótulo para o campo de senha
+        label='Senha',
         widget=forms.PasswordInput(attrs={
-            'class': 'form-control',  # Adiciona a classe do Bootstrap
-            'placeholder': 'Digite sua senha',  # Placeholder para o campo
+            'class': 'form-control',
+            'placeholder': 'Digite sua senha',
         })
     )

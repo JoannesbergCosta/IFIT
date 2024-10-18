@@ -2,6 +2,7 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic.list import ListView
 from .models import Campo, User, Exercicio, TrainingExercicio
 from django.urls import reverse_lazy
+from .forms import TrainingExercicioForm
 
 # Create Views
 class CampoCreate(CreateView):
@@ -22,21 +23,11 @@ class ExercicioCreate(CreateView):
     template_name = 'cadastros/form.html'
     success_url = reverse_lazy('listar-exercicios')
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['exercicios'] = Exercicio.objects.all()  # Passa a lista de exercícios para o template
-        return context
-
 class TrainingExercicioCreate(CreateView):
     model = TrainingExercicio
-    fields = ['pt', 'exercise', 'exercise', 'series', 'repeticoes', 'carga', 'descanso']  # Removido 'training'
-    template_name = 'cadastros/form.html'
+    form_class = TrainingExercicioForm
+    template_name = 'cadastros/form_training_exercicio.html'
     success_url = reverse_lazy('listar-training-exercicios')
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['exercicios'] = Exercicio.objects.all()  # Passa a lista de exercícios para o template
-        return context
 
 # Update Views
 class CampoUpdate(UpdateView):
@@ -59,14 +50,9 @@ class ExercicioUpdate(UpdateView):
 
 class TrainingExercicioUpdate(UpdateView):
     model = TrainingExercicio
-    fields = ['pt', 'exercise', 'exercise', 'series', 'repeticoes', 'carga', 'descanso']  # Removido 'training'
-    template_name = 'cadastros/form.html'
+    form_class = TrainingExercicioForm
+    template_name = 'cadastros/form_training_exercicio.html'
     success_url = reverse_lazy('listar-training-exercicios')
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['exercicios'] = Exercicio.objects.all()  # Passa a lista de exercícios para o template
-        return context
 
 # Delete Views
 class CampoDelete(DeleteView):
@@ -105,8 +91,3 @@ class ExercicioList(ListView):
 class TrainingExercicioList(ListView):
     model = TrainingExercicio
     template_name = 'cadastros/listas/training_exercicio.html'
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['training_exercicio'] = TrainingExercicio.objects.select_related('exercise').all()  # Removido 'training'
-        return context

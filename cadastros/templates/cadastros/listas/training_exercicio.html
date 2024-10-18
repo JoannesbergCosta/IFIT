@@ -7,55 +7,49 @@
     <h3 class="text-center mb-4">Programas de Treino</h3>
 
     <!-- Botão superior para cadastrar -->
-    <div class="text-center mb-3">
-        <a href="{% url 'cadastrar-training-exercicio' %}" class="btn btn-primary btn-lg shadow-sm">Cadastrar um novo Programa de Treino</a>
+    <div class="text-center mb-4">
+        <a href="{% url 'cadastrar-training-exercicio' %}" class="btn btn-success btn-lg shadow-sm">Cadastrar um novo Programa de Treino</a>
     </div>
 
-    <div class="card shadow-lg p-3 mb-5 bg-white rounded">
-        <div class="table-responsive">
-            <table class="table table-bordered table-striped table-hover text-center align-middle">
-                <thead class="thead-dark">
-                    <tr>
-                        <th>ID</th>
-                        <th>Exercícios</th>
-                        <th>Séries</th>
-                        <th>Repetições</th>
-                        <th>Carga (Kg)</th>
-                        <th>Descanso (seg)</th>
-                        <th>Ações</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for training_exercicio in object_list %}
-                    <tr class="bg-light">
-                        <td><strong>{{ training_exercicio.pk }}</strong></td>
-                        <td>{{ training_exercicio.exercise }}</td>
-                        <td>{{ training_exercicio.series }} séries</td>
-                        <td>{{ training_exercicio.repeticoes }} reps</td>
-                        <td>{{ training_exercicio.carga }} kg</td>
-                        <td>{{ training_exercicio.descanso }} seg</td>
-                        <td>
-                            <a href="{% url 'editar-training-exercicio' training_exercicio.pk %}" class="btn btn-warning btn-sm" title="Editar">
-                                <i class="fas fa-edit"></i>
-                            </a>
-                            <a href="{% url 'excluir-training-exercicio' training_exercicio.pk %}" class="btn btn-danger btn-sm" title="Excluir">
-                                <i class="fas fa-trash-alt"></i>
-                            </a>
-                        </td>
-                    </tr>
-                    {% empty %}
-                    <tr>
-                        <td colspan="7" class="text-center">Nenhum exercício encontrado.</td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+    <div class="row">
+        {% for training_exercicio in object_list %}
+        <div class="col-md-4 mb-4">
+            <div class="card border-light shadow-sm" style="border-radius: 15px; background-color: #f8f9fa;">
+                <div class="card-body">
+                    <h5 class="card-title text-secondary">Programa ID: <strong>{{ training_exercicio.pk }}</strong></h5>
+                    <p class="card-text">
+                        <strong>Exercícios:</strong>
+                        <div class="d-flex flex-wrap" style="gap: 0.5rem;">
+                            {% for exercicio in training_exercicio.exercises.all %}
+                                <span class="badge bg-info text-dark">{{ exercicio.exercicio }}</span>
+                            {% endfor %}
+                        </div>
+                    </p>
+                    <p><strong>Séries:</strong> <span class="text-primary">{{ training_exercicio.series }}</span> séries</p>
+                    <p><strong>Repetições:</strong> <span class="text-primary">{{ training_exercicio.repeticoes }}</span> reps</p>
+                    <p><strong>Carga:</strong> <span class="text-primary">{{ training_exercicio.carga }}</span> kg</p>
+                    <p><strong>Descanso:</strong> <span class="text-primary">{{ training_exercicio.descanso }}</span> seg</p>
+                    <div class="text-center">
+                        <a href="{% url 'editar-training-exercicio' training_exercicio.pk %}" class="btn btn-warning btn-sm" title="Editar">
+                            <i class="fas fa-edit"></i> Editar
+                        </a>
+                        <a href="{% url 'excluir-training-exercicio' training_exercicio.pk %}" class="btn btn-danger btn-sm" title="Excluir">
+                            <i class="fas fa-trash-alt"></i> Excluir
+                        </a>
+                    </div>
+                </div>
+            </div>
         </div>
+        {% empty %}
+        <div class="col-12">
+            <div class="alert alert-warning text-center">Nenhum programa de treino encontrado.</div>
+        </div>
+        {% endfor %}
     </div>
 
     <!-- Botão inferior para adicionar exercício -->
-    <div class="text-center mt-3">
-        <a href="{% url 'cadastrar-exercicio' %}" class="btn btn-outline-success btn-lg shadow-sm" style="border-width: 2px;">+ Adicionar Exercício</a>
+    <div class="text-center mt-4">
+        <a href="{% url 'cadastrar-exercicio' %}" class="btn btn-outline-primary btn-lg shadow-sm" style="border-width: 2px;">+ Adicionar Exercício</a>
     </div>
 
 </div>
