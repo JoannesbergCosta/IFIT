@@ -3,6 +3,16 @@
 {% load static %}
 
 {% block conteudo %}
+<style>
+    .card {
+        transition: transform 0.3s; /* Transição suave ao mudar o tamanho */
+    }
+
+    .card:hover {
+        transform: scale(1.05); /* Aumenta o tamanho do card ao passar o mouse */
+    }
+</style>
+
 <div class="container mt-5">
     <h3 class="text-center mb-4">Programas de Treino</h3>
 
@@ -11,32 +21,54 @@
         <a href="{% url 'cadastrar-training-exercicio' %}" class="btn btn-success btn-lg shadow-sm">Cadastrar um novo Programa de Treino</a>
     </div>
 
-    <div class="row">
+    <div class="row flex-nowrap overflow-auto">
         {% for training_exercicio in object_list %}
         <div class="col-md-4 mb-4">
             <div class="card border-light shadow-sm" style="border-radius: 15px; background-color: #f8f9fa;">
                 <div class="card-body">
                     <h5 class="card-title text-secondary">Programa ID: <strong>{{ training_exercicio.pk }}</strong></h5>
-                    <p class="card-text">
-                        <strong>Exercícios:</strong>
-                        <div class="d-flex flex-wrap" style="gap: 0.5rem;">
-                            {% for exercicio in training_exercicio.exercises.all %}
-                                <span class="badge bg-info text-dark">{{ exercicio.exercicio }}</span>
-                            {% endfor %}
-                        </div>
-                    </p>
-                    <p><strong>Séries:</strong> <span class="text-primary">{{ training_exercicio.series }}</span> séries</p>
-                    <p><strong>Repetições:</strong> <span class="text-primary">{{ training_exercicio.repeticoes }}</span> reps</p>
-                    <p><strong>Carga:</strong> <span class="text-primary">{{ training_exercicio.carga }}</span> kg</p>
-                    <p><strong>Descanso:</strong> <span class="text-primary">{{ training_exercicio.descanso }}</span> seg</p>
-                    <div class="text-center">
-                        <a href="{% url 'editar-training-exercicio' training_exercicio.pk %}" class="btn btn-warning btn-sm" title="Editar">
-                            <i class="fas fa-edit"></i> Editar
-                        </a>
-                        <a href="{% url 'excluir-training-exercicio' training_exercicio.pk %}" class="btn btn-danger btn-sm" title="Excluir">
-                            <i class="fas fa-trash-alt"></i> Excluir
-                        </a>
-                    </div>
+                </div>
+                
+                <!-- Tabela estilizada -->
+                <div class="table-responsive">
+                    <table class="table table-borderless">
+                        <tbody>
+                            <tr>
+                                <td><strong>Exercícios:</strong></td>
+                                <td>
+                                    <div class="d-flex flex-wrap" style="gap: 0.5rem;">
+                                        {% for exercicio in training_exercicio.exercises.all %}
+                                            <span class="badge bg-info text-dark">{{ exercicio.exercicio }}</span>
+                                        {% endfor %}
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>Séries:</strong></td>
+                                <td><span class="text-primary">{{ training_exercicio.series }}</span> séries</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Repetições:</strong></td>
+                                <td><span class="text-primary">{{ training_exercicio.repeticoes }}</span> reps</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Carga:</strong></td>
+                                <td><span class="text-primary">{{ training_exercicio.carga }}</span> kg</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Descanso:</strong></td>
+                                <td><span class="text-primary">{{ training_exercicio.descanso }}</span> seg</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="text-center mt-3">
+                    <a href="{% url 'editar-training-exercicio' training_exercicio.pk %}" class="btn btn-warning btn-sm" title="Editar">
+                        <i class="fas fa-edit"></i> Editar
+                    </a>
+                    <a href="{% url 'excluir-training-exercicio' training_exercicio.pk %}" class="btn btn-danger btn-sm" title="Excluir">
+                        <i class="fas fa-trash-alt"></i> Excluir
+                    </a>
                 </div>
             </div>
         </div>
@@ -53,4 +85,5 @@
     </div>
 
 </div>
+
 {% endblock %}
