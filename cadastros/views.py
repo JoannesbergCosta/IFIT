@@ -29,7 +29,7 @@ class ExercicioCreate(CreateView):
 
 class TrainingExercicioCreate(CreateView):
     model = TrainingExercicio
-    fields = ['exercise', 'series', 'repeticoes', 'carga', 'descanso']  # Removido 'training'
+    fields = ['pt', 'exercise', 'exercise', 'series', 'repeticoes', 'carga', 'descanso']  # Removido 'training'
     template_name = 'cadastros/form.html'
     success_url = reverse_lazy('listar-training-exercicios')
 
@@ -59,7 +59,7 @@ class ExercicioUpdate(UpdateView):
 
 class TrainingExercicioUpdate(UpdateView):
     model = TrainingExercicio
-    fields = ['exercise', 'series', 'repeticoes', 'carga', 'descanso']  # Removido 'training'
+    fields = ['pt', 'exercise', 'exercise', 'series', 'repeticoes', 'carga', 'descanso']  # Removido 'training'
     template_name = 'cadastros/form.html'
     success_url = reverse_lazy('listar-training-exercicios')
 

@@ -33,6 +33,7 @@ class Exercicio(models.Model):
 
 class TrainingExercicio(models.Model):
     exercise = models.ForeignKey(Exercicio, on_delete=models.CASCADE,)
+    pt = models.CharField(max_length=1, default='Programa treino')
     series = models.IntegerField()
     repeticoes = models.IntegerField()
     carga = models.CharField(max_length=50, blank=True, null=True)
