@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'crispy_forms',  
     'crispy_bootstrap5',
     'cadastros.apps.CadastrosConfig',
+    'usuarios.apps.UsuariosConfig',
 ]
 
 MIDDLEWARE = [
@@ -134,7 +135,9 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Login and Logout Redirects
 LOGIN_REDIRECT_URL = '/'  # Página para onde o usuário será redirecionado após o login bem-sucedido
-LOGOUT_REDIRECT_URL = '/login/'  # Página para onde o usuário será redirecionado após o logout
+LOGIN_URL ='login'
+LOGOUT_REDIRECT_URL = 'login'
+
 
 # Crispy Forms Configuration
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"  # Ativar o uso do Bootstrap 5
