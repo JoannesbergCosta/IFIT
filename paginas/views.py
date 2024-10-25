@@ -7,8 +7,12 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
 from .forms import LoginForm
 
+from django.urls import reverse_lazy
+from django.contrib.auth.mixins import LoginRequiredMixin
+
 # View para a página inicial
-class IndexView(TemplateView):
+class IndexView(LoginRequiredMixin, TemplateView):
+    login_url = reverse_lazy('login')
     template_name = "paginas/index.html"
 
 # View para a página "Sobre"
