@@ -1,11 +1,9 @@
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic.list import ListView
-from .models import Campo, User, Exercicio, TrainingExercicio
+from .models import Campo, UserAuth, Exercicio, TrainingExercicio
 from django.urls import reverse_lazy
 from .forms import TrainingExercicioForm
-
 from django.contrib.auth.mixins import LoginRequiredMixin
-
 from braces.views import GroupRequiredMixin
 
 # Create Views
@@ -16,13 +14,14 @@ class CampoCreate(LoginRequiredMixin, CreateView):
     template_name = 'cadastros/form.html'
     success_url = reverse_lazy('listar-campos')
 
-class UserCreate(GroupRequiredMixin, LoginRequiredMixin, CreateView):
+class UserAuthCreate(GroupRequiredMixin, LoginRequiredMixin, CreateView):
     login_url = reverse_lazy('login')
-    group_required = u"Administrador"
-    model = User
-    fields = ['matricula', 'campo', 'nome']
+    group_required = "Administrador"
+    model = UserAuth  # Usar o modelo UserAuth
+    fields = ['user', 'matricula', 'campo']  # Campos definidos em UserAuth
     template_name = 'cadastros/form.html'
-    success_url = reverse_lazy('listar-users')
+    success_url = reverse_lazy('listar-usersauth')  # Corrija o nome para 'listar-usersauth'
+
 
 class ExercicioCreate(LoginRequiredMixin, CreateView):
     login_url = reverse_lazy('login')
@@ -46,13 +45,13 @@ class CampoUpdate(LoginRequiredMixin, UpdateView):
     template_name = 'cadastros/form.html'
     success_url = reverse_lazy('listar-campos')
 
-class UserUpdate(GroupRequiredMixin, LoginRequiredMixin, UpdateView):
+class UserAuthUpdate(GroupRequiredMixin, LoginRequiredMixin, UpdateView):
     login_url = reverse_lazy('login')
-    group_required = u"Administrador"
-    model = User
-    fields = ['matricula', 'campo', 'nome']
+    group_required = "Administrador"
+    model = UserAuth  # Mude para UserAuth
+    fields = ['matricula', 'campo']
     template_name = 'cadastros/form.html'
-    success_url = reverse_lazy('listar-users')
+    success_url = reverse_lazy('listar-usersauth')
 
 class ExercicioUpdate(LoginRequiredMixin, UpdateView):
     login_url = reverse_lazy('login')
@@ -75,12 +74,12 @@ class CampoDelete(LoginRequiredMixin, DeleteView):
     template_name = 'cadastros/form-excluir.html'
     success_url = reverse_lazy('listar-campos')
 
-class UserDelete(GroupRequiredMixin, LoginRequiredMixin, DeleteView):
+class UserAuthDelete(GroupRequiredMixin, LoginRequiredMixin, DeleteView):
     login_url = reverse_lazy('login')
-    group_required = u"Administrador"
-    model = User
+    group_required = "Administrador"
+    model = UserAuth  # Use o modelo correto
     template_name = 'cadastros/form-excluir.html'
-    success_url = reverse_lazy('listar-users')
+    success_url = reverse_lazy('listar-usersauth')  # Atualize aqui para o nome correto
 
 class ExercicioDelete(LoginRequiredMixin, DeleteView):
     login_url = reverse_lazy('login')
@@ -100,10 +99,10 @@ class CampoList(LoginRequiredMixin, ListView):
     model = Campo
     template_name = 'cadastros/listas/campo.html'
 
-class UserList(LoginRequiredMixin, ListView):
+class UserAuthList(LoginRequiredMixin, ListView):
     login_url = reverse_lazy('login')
-    model = User
-    template_name = 'cadastros/listas/user.html'
+    model = UserAuth  # Mude para UserAuth
+    template_name = 'cadastros/listas/userauth.html'
 
 class ExercicioList(LoginRequiredMixin, ListView):
     login_url = reverse_lazy('login')

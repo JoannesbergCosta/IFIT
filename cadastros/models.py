@@ -1,5 +1,6 @@
 from django.db import models
 from django.core.validators import MaxValueValidator, MinValueValidator
+from django.contrib.auth.models import User
 
 class Campo(models.Model):
     nome = models.CharField(max_length=50)
@@ -7,7 +8,8 @@ class Campo(models.Model):
     def __str__(self):
         return f"[Campo: {self.nome}]"
 
-class User(models.Model):
+class UserAuth(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)  # Associa UserAuth com User
     matricula = models.IntegerField(
         verbose_name="Matrícula",
         validators=[MinValueValidator(10000000000000), MaxValueValidator(99999999999999)]
@@ -34,6 +36,7 @@ class TrainingExercicio(models.Model):
     carga = models.CharField(max_length=50, blank=True, null=True)
     descanso = models.IntegerField()  # em segundos
     descricao = models.CharField(max_length=100, default='Descrição padrão')
+    usuario = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
         exercicios = ', '.join([exercise.exercicio for exercise in self.exercises.all()])
