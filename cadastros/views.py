@@ -6,6 +6,8 @@ from .forms import TrainingExercicioForm
 
 from django.contrib.auth.mixins import LoginRequiredMixin
 
+from braces.views import GroupRequiredMixin
+
 # Create Views
 class CampoCreate(LoginRequiredMixin, CreateView):
     login_url = reverse_lazy('login')
@@ -14,8 +16,9 @@ class CampoCreate(LoginRequiredMixin, CreateView):
     template_name = 'cadastros/form.html'
     success_url = reverse_lazy('listar-campos')
 
-class UserCreate(LoginRequiredMixin, CreateView):
+class UserCreate(GroupRequiredMixin, LoginRequiredMixin, CreateView):
     login_url = reverse_lazy('login')
+    group_required = u"Administrador"
     model = User
     fields = ['matricula', 'campo', 'nome']
     template_name = 'cadastros/form.html'
@@ -43,8 +46,9 @@ class CampoUpdate(LoginRequiredMixin, UpdateView):
     template_name = 'cadastros/form.html'
     success_url = reverse_lazy('listar-campos')
 
-class UserUpdate(LoginRequiredMixin, UpdateView):
+class UserUpdate(GroupRequiredMixin, LoginRequiredMixin, UpdateView):
     login_url = reverse_lazy('login')
+    group_required = u"Administrador"
     model = User
     fields = ['matricula', 'campo', 'nome']
     template_name = 'cadastros/form.html'
@@ -71,8 +75,9 @@ class CampoDelete(LoginRequiredMixin, DeleteView):
     template_name = 'cadastros/form-excluir.html'
     success_url = reverse_lazy('listar-campos')
 
-class UserDelete(LoginRequiredMixin, DeleteView):
+class UserDelete(GroupRequiredMixin, LoginRequiredMixin, DeleteView):
     login_url = reverse_lazy('login')
+    group_required = u"Administrador"
     model = User
     template_name = 'cadastros/form-excluir.html'
     success_url = reverse_lazy('listar-users')
