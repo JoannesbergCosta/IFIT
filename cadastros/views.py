@@ -16,22 +16,24 @@ class CampoCreate(LoginRequiredMixin, CreateView):
 
 class UserAuthCreate(GroupRequiredMixin, LoginRequiredMixin, CreateView):
     login_url = reverse_lazy('login')
-    group_required = "Administrador"
+    group_required = u"Administrador"
     model = UserAuth  # Usar o modelo UserAuth
     fields = ['user', 'matricula', 'campo']  # Campos definidos em UserAuth
     template_name = 'cadastros/form.html'
     success_url = reverse_lazy('listar-usersauth')  # Corrija o nome para 'listar-usersauth'
 
 
-class ExercicioCreate(LoginRequiredMixin, CreateView):
+class ExercicioCreate(GroupRequiredMixin, LoginRequiredMixin, CreateView):
     login_url = reverse_lazy('login')
+    group_required = u"Administrador"
     model = Exercicio
     fields = ['exercicio', 'tipo', 'grupo', 'descricao']
     template_name = 'cadastros/form.html'
     success_url = reverse_lazy('listar-exercicios')
 
-class TrainingExercicioCreate(LoginRequiredMixin, CreateView):
+class TrainingExercicioCreate(GroupRequiredMixin, LoginRequiredMixin, CreateView):
     login_url = reverse_lazy('login')
+    group_required = u"Administrador"
     model = TrainingExercicio
     form_class = TrainingExercicioForm
     template_name = 'cadastros/form_training_exercicio.html'
@@ -68,7 +70,8 @@ class TrainingExercicioUpdate(LoginRequiredMixin, UpdateView):
     success_url = reverse_lazy('listar-training-exercicios')
 
 ## Delete Views
-class CampoDelete(LoginRequiredMixin, DeleteView):
+class CampoDelete(GroupRequiredMixin, LoginRequiredMixin, DeleteView):
+    group_required = u"Administrador"
     login_url = reverse_lazy('login')
     model = Campo
     template_name = 'cadastros/form-excluir.html'
@@ -76,19 +79,21 @@ class CampoDelete(LoginRequiredMixin, DeleteView):
 
 class UserAuthDelete(GroupRequiredMixin, LoginRequiredMixin, DeleteView):
     login_url = reverse_lazy('login')
-    group_required = "Administrador"
+    group_required = u"Administrador"
     model = UserAuth  # Use o modelo correto
     template_name = 'cadastros/form-excluir.html'
     success_url = reverse_lazy('listar-usersauth')  # Atualize aqui para o nome correto
 
-class ExercicioDelete(LoginRequiredMixin, DeleteView):
+class ExercicioDelete(GroupRequiredMixin, LoginRequiredMixin, DeleteView):
     login_url = reverse_lazy('login')
+    group_required = u"Administrador"
     model = Exercicio
     template_name = 'cadastros/form-excluir.html'
     success_url = reverse_lazy('listar-exercicios')
 
-class TrainingExercicioDelete(LoginRequiredMixin, DeleteView):
+class TrainingExercicioDelete(GroupRequiredMixin, LoginRequiredMixin, DeleteView):
     login_url = reverse_lazy('login')
+    group_required = u"Administrador"
     model = TrainingExercicio
     template_name = 'cadastros/form-excluir.html'
     success_url = reverse_lazy('listar-training-exercicios')
