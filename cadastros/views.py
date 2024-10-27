@@ -67,7 +67,7 @@ class TrainingExercicioUpdate(LoginRequiredMixin, UpdateView):
     template_name = 'cadastros/form_training_exercicio.html'
     success_url = reverse_lazy('listar-training-exercicios')
 
-# Delete Views
+## Delete Views
 class CampoDelete(LoginRequiredMixin, DeleteView):
     login_url = reverse_lazy('login')
     model = Campo
