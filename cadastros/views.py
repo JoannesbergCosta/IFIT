@@ -1,3 +1,4 @@
+from django.db.models.query import QuerySet
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic.list import ListView
 from .models import Campo, UserAuth, Exercicio, TrainingExercicio
@@ -17,10 +18,10 @@ class CampoCreate(LoginRequiredMixin, CreateView):
 class UserAuthCreate(GroupRequiredMixin, LoginRequiredMixin, CreateView):
     login_url = reverse_lazy('login')
     group_required = u"Administrador"
-    model = UserAuth  # Usar o modelo UserAuth
-    fields = ['user', 'matricula', 'campo']  # Campos definidos em UserAuth
+    model = UserAuth  
+    fields = ['user', 'matricula', 'campo']  
     template_name = 'cadastros/form.html'
-    success_url = reverse_lazy('listar-usersauth')  # Corrija o nome para 'listar-usersauth'
+    success_url = reverse_lazy('listar-usersauth')  
 
 
 class ExercicioCreate(GroupRequiredMixin, LoginRequiredMixin, CreateView):
@@ -39,6 +40,14 @@ class TrainingExercicioCreate(GroupRequiredMixin, LoginRequiredMixin, CreateView
     template_name = 'cadastros/form_training_exercicio.html'
     success_url = reverse_lazy('listar-training-exercicios')
 
+    def form_valid(self, form):
+
+        form.instance.usuario = self.request.user
+        
+        url = super().form_valid(form)
+
+        return url
+
 # Update Views
 class CampoUpdate(LoginRequiredMixin, UpdateView):
     login_url = reverse_lazy('login')
@@ -50,7 +59,7 @@ class CampoUpdate(LoginRequiredMixin, UpdateView):
 class UserAuthUpdate(GroupRequiredMixin, LoginRequiredMixin, UpdateView):
     login_url = reverse_lazy('login')
     group_required = "Administrador"
-    model = UserAuth  # Mude para UserAuth
+    model = UserAuth  
     fields = ['matricula', 'campo']
     template_name = 'cadastros/form.html'
     success_url = reverse_lazy('listar-usersauth')
@@ -80,9 +89,9 @@ class CampoDelete(GroupRequiredMixin, LoginRequiredMixin, DeleteView):
 class UserAuthDelete(GroupRequiredMixin, LoginRequiredMixin, DeleteView):
     login_url = reverse_lazy('login')
     group_required = u"Administrador"
-    model = UserAuth  # Use o modelo correto
+    model = UserAuth  
     template_name = 'cadastros/form-excluir.html'
-    success_url = reverse_lazy('listar-usersauth')  # Atualize aqui para o nome correto
+    success_url = reverse_lazy('listar-usersauth')  
 
 class ExercicioDelete(GroupRequiredMixin, LoginRequiredMixin, DeleteView):
     login_url = reverse_lazy('login')
@@ -106,7 +115,7 @@ class CampoList(LoginRequiredMixin, ListView):
 
 class UserAuthList(LoginRequiredMixin, ListView):
     login_url = reverse_lazy('login')
-    model = UserAuth  # Mude para UserAuth
+    model = UserAuth
     template_name = 'cadastros/listas/userauth.html'
 
 class ExercicioList(LoginRequiredMixin, ListView):
@@ -118,3 +127,10 @@ class TrainingExercicioList(LoginRequiredMixin, ListView):
     login_url = reverse_lazy('login')
     model = TrainingExercicio
     template_name = 'cadastros/listas/training_exercicio.html'
+
+    def get_queryset(self):
+        if self.request.user.is_staff:  #Verifica se o usuário é um administrador
+            return TrainingExercicio.objects.all()
+        else:
+            return TrainingExercicio.objects.filter(usuario=self.request.user)
+

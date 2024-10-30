@@ -9,7 +9,7 @@ class Campo(models.Model):
         return f"[Campo: {self.nome}]"
 
 class UserAuth(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)  # Associa UserAuth com User
+    user = models.OneToOneField(User, on_delete=models.CASCADE)  
     matricula = models.IntegerField(
         verbose_name="Matrícula",
         validators=[MinValueValidator(10000000000000), MaxValueValidator(99999999999999)]
