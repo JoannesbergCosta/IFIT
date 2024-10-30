@@ -7,6 +7,9 @@ from .forms import TrainingExercicioForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from braces.views import GroupRequiredMixin
 
+from django.http import HttpResponseForbidden
+
+from django.shortcuts import get_object_or_404, redirect
 # Create Views
 class CampoCreate(LoginRequiredMixin, CreateView):
     login_url = reverse_lazy('login')
@@ -49,8 +52,9 @@ class TrainingExercicioCreate(GroupRequiredMixin, LoginRequiredMixin, CreateView
         return url
 
 # Update Views
-class CampoUpdate(LoginRequiredMixin, UpdateView):
+class CampoUpdate(GroupRequiredMixin, LoginRequiredMixin, UpdateView):
     login_url = reverse_lazy('login')
+    group_required = u"Administrador"
     model = Campo
     fields = ['nome']
     template_name = 'cadastros/form.html'
@@ -58,30 +62,41 @@ class CampoUpdate(LoginRequiredMixin, UpdateView):
 
 class UserAuthUpdate(GroupRequiredMixin, LoginRequiredMixin, UpdateView):
     login_url = reverse_lazy('login')
-    group_required = "Administrador"
+    group_required = u"Administrador"
     model = UserAuth  
     fields = ['matricula', 'campo']
     template_name = 'cadastros/form.html'
     success_url = reverse_lazy('listar-usersauth')
 
-class ExercicioUpdate(LoginRequiredMixin, UpdateView):
+class ExercicioUpdate(GroupRequiredMixin, LoginRequiredMixin, UpdateView):
     login_url = reverse_lazy('login')
+    group_required = u"Administrador"
     model = Exercicio
     fields = ['exercicio', 'tipo', 'grupo', 'descricao']
     template_name = 'cadastros/form.html'
     success_url = reverse_lazy('listar-exercicios')
 
-class TrainingExercicioUpdate(LoginRequiredMixin, UpdateView):
+class TrainingExercicioUpdate(GroupRequiredMixin, LoginRequiredMixin, UpdateView):
     login_url = reverse_lazy('login')
+    group_required = u"Administrador"
     model = TrainingExercicio
     form_class = TrainingExercicioForm
     template_name = 'cadastros/form_training_exercicio.html'
     success_url = reverse_lazy('listar-training-exercicios')
 
+    def dispatch(self, request, *args, **kwargs):
+        if not request.user.is_staff:
+            return HttpResponseForbidden("Você não tem permissão para editar este registro.")
+        return super().dispatch(request, *args, **kwargs)
+
+    def get_object(self, queryset=None):
+        return TrainingExercicio.objects.get(pk=self.kwargs['pk'])
+
+
 ## Delete Views
 class CampoDelete(GroupRequiredMixin, LoginRequiredMixin, DeleteView):
-    group_required = u"Administrador"
     login_url = reverse_lazy('login')
+    group_required = u"Administrador"
     model = Campo
     template_name = 'cadastros/form-excluir.html'
     success_url = reverse_lazy('listar-campos')
@@ -106,6 +121,18 @@ class TrainingExercicioDelete(GroupRequiredMixin, LoginRequiredMixin, DeleteView
     model = TrainingExercicio
     template_name = 'cadastros/form-excluir.html'
     success_url = reverse_lazy('listar-training-exercicios')
+
+    def dispatch(self, request, *args, **kwargs):
+        if not request.user.is_staff:
+            # Redireciona usuários comuns para a lista de registros
+            return redirect('listar-training-exercicios')
+        return super().dispatch(request, *args, **kwargs)
+
+    def get_object(self, queryset=None):
+        # Apenas administradores chegam a este ponto
+        self.object = get_object_or_404(TrainingExercicio, pk=self.kwargs['pk'])
+        return self.object
+
 
 # List Views
 class CampoList(LoginRequiredMixin, ListView):
