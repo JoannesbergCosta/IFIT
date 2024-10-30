@@ -97,7 +97,7 @@ class TrainingExercicioUpdate(GroupRequiredMixin, LoginRequiredMixin, UpdateView
 class CampoDelete(GroupRequiredMixin, LoginRequiredMixin, DeleteView):
     login_url = reverse_lazy('login')
     group_required = u"Administrador"
-    model = Campo
+    model = CampoWS
     template_name = 'cadastros/form-excluir.html'
     success_url = reverse_lazy('listar-campos')
 
@@ -124,12 +124,12 @@ class TrainingExercicioDelete(GroupRequiredMixin, LoginRequiredMixin, DeleteView
 
     def dispatch(self, request, *args, **kwargs):
         if not request.user.is_staff:
-            # Redireciona usuários comuns para a lista de registros
+            
             return redirect('listar-training-exercicios')
         return super().dispatch(request, *args, **kwargs)
 
     def get_object(self, queryset=None):
-        # Apenas administradores chegam a este ponto
+
         self.object = get_object_or_404(TrainingExercicio, pk=self.kwargs['pk'])
         return self.object
 
@@ -156,7 +156,7 @@ class TrainingExercicioList(LoginRequiredMixin, ListView):
     template_name = 'cadastros/listas/training_exercicio.html'
 
     def get_queryset(self):
-        if self.request.user.is_staff:  #Verifica se o usuário é um administrador
+        if self.request.user.is_staff:  
             return TrainingExercicio.objects.all()
         else:
             return TrainingExercicio.objects.filter(usuario=self.request.user)
