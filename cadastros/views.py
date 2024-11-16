@@ -97,7 +97,7 @@ class TrainingExercicioUpdate(GroupRequiredMixin, LoginRequiredMixin, UpdateView
 class CampoDelete(GroupRequiredMixin, LoginRequiredMixin, DeleteView):
     login_url = reverse_lazy('login')
     group_required = u"Administrador"
-    model = CampoWS
+    model = Campo
     template_name = 'cadastros/form-excluir.html'
     success_url = reverse_lazy('listar-campos')
 
