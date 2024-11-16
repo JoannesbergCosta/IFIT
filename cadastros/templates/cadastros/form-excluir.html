@@ -1,29 +1,22 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User Form</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-</head>
-<body>
-    <div class="container mt-5">
-        <h2>Excluir Registros</h2>
-        <p>
-            Confirme para excluir o registro definitivamente
+{% extends 'paginas/index.html' %}
+
+{% load static %}
+
+{% block conteudo %}
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Excluir Registro</h2>
+    <p class="text-center">
+        Confirme para excluir o registro definitivamente.
+    </p>
+    <form method="post" novalidate>
+        {% csrf_token %}
+        <p class="text-center">
+            Deseja excluir o registro: <b>{{ object }}</b>?
         </p>
-        <form method="POST" novalidate>
-
-            <p>
-                Deseja excluir o registro: <b>{{ object }} ?</b>
-            </p>
-
-            {% csrf_token %}
-
-            {{ form.as_p }}  <!-- Isso renderiza o formulário como parágrafos HTML -->
-
-            <button type="submit" class="btn btn-danger">Excluir</button>
-        </form>
-    </div>
-</body>
-</html>
+        <div class="text-center mt-4">
+            <button type="submit" class="btn btn-danger btn-lg">Excluir</button>
+            <a href="{% url 'listar-training-exercicios' %}" class="btn btn-secondary btn-lg">Cancelar</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

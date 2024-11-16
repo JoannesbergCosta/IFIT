@@ -10,6 +10,7 @@ from braces.views import GroupRequiredMixin
 from django.http import HttpResponseForbidden
 
 from django.shortcuts import get_object_or_404, redirect
+
 # Create Views
 class CampoCreate(LoginRequiredMixin, CreateView):
     login_url = reverse_lazy('login')
@@ -25,7 +26,6 @@ class UserAuthCreate(GroupRequiredMixin, LoginRequiredMixin, CreateView):
     fields = ['user', 'matricula', 'campo']  
     template_name = 'cadastros/form.html'
     success_url = reverse_lazy('listar-usersauth')  
-
 
 class ExercicioCreate(GroupRequiredMixin, LoginRequiredMixin, CreateView):
     login_url = reverse_lazy('login')
@@ -44,10 +44,21 @@ class TrainingExercicioCreate(GroupRequiredMixin, LoginRequiredMixin, CreateView
     success_url = reverse_lazy('listar-training-exercicios')
 
     def form_valid(self, form):
-
         form.instance.usuario = self.request.user
         
         url = super().form_valid(form)
+
+        # Aqui, associamos os exercícios com as informações adicionais
+        exercises = form.cleaned_data['exercises']
+        for i, exercise in enumerate(exercises):
+            # Aqui você pode pegar os dados do formulário para cada exercício
+            series = form.cleaned_data.get(f'series_{i}')
+            repeticoes = form.cleaned_data.get(f'repeticoes_{i}')
+            carga = form.cleaned_data.get(f'carga_{i}')
+            descanso = form.cleaned_data.get(f'descanso_{i}')
+            
+            # Associe os exercícios com o training_exercicio e seus dados
+            form.instance.exercises.add(exercise)
 
         return url
 
@@ -92,8 +103,7 @@ class TrainingExercicioUpdate(GroupRequiredMixin, LoginRequiredMixin, UpdateView
     def get_object(self, queryset=None):
         return TrainingExercicio.objects.get(pk=self.kwargs['pk'])
 
-
-## Delete Views
+# Delete Views
 class CampoDelete(GroupRequiredMixin, LoginRequiredMixin, DeleteView):
     login_url = reverse_lazy('login')
     group_required = u"Administrador"
@@ -124,15 +134,12 @@ class TrainingExercicioDelete(GroupRequiredMixin, LoginRequiredMixin, DeleteView
 
     def dispatch(self, request, *args, **kwargs):
         if not request.user.is_staff:
-            
             return redirect('listar-training-exercicios')
         return super().dispatch(request, *args, **kwargs)
 
     def get_object(self, queryset=None):
-
         self.object = get_object_or_404(TrainingExercicio, pk=self.kwargs['pk'])
         return self.object
-
 
 # List Views
 class CampoList(LoginRequiredMixin, ListView):
@@ -160,4 +167,3 @@ class TrainingExercicioList(LoginRequiredMixin, ListView):
             return TrainingExercicio.objects.all()
         else:
             return TrainingExercicio.objects.filter(usuario=self.request.user)
-
