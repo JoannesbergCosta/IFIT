@@ -1,0 +1,46 @@
+{% extends 'paginas/index.html' %}
+
+{% load static %}
+
+{% block conteudo %}
+<h3>
+    Avaliações
+</h3>
+
+<a href="{% url 'cadastrar-avaliacao' %}" class="btn btn-primary btn-sm">Adicionar Avaliação</a>
+<hr>
+<div class="table-responsive">
+
+</div>
+<table class="table table-striped">
+    <tr>
+        <th>ID</th> <!--SO TESTE-->
+        <th>Usuário</th>
+        <th>Data</th>
+        <th>Hora</th>
+        <th>Peso</th>
+        <th>Altura</th>
+        <th>Idade</th>
+        <th>Ações</th>
+    </tr>
+    {% for avaliacao in object_list %}
+    <tr>
+        <td>{{ avaliacao.pk }}</td>
+        <td>{{ avaliacao.usuario }}</td>
+        <td>{{ avaliacao.data }}</td>
+        <td>{{ avaliacao.hora }}</td>
+        <td>{{ avaliacao.peso }}</td>
+        <td>{{ avaliacao.altura }}</td>
+        <td>{{ avaliacao.idade }}</td>
+        <td>
+            <a href="{% url 'editar-avaliacao' avaliacao.pk %}" class="btn btn-warning btn-sm" title="Editar">Editar</a>
+            <a href="{% url 'excluir-avaliacao' avaliacao.pk %}" class="btn btn-danger btn-sm" title="Excluir">Excluir</a>
+        </td> 
+    </tr>
+    {% empty %}
+    <tr>
+        <td colspan="7">Nenhuma Avaliação registrada.</td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

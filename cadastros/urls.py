@@ -1,10 +1,12 @@
 
 from django.urls import path
 
-from .views import CampoCreate, UserAuthCreate, ExercicioCreate, TrainingExercicioCreate
-from .views import CampoUpdate, UserAuthUpdate, ExercicioUpdate, TrainingExercicioUpdate
-from .views import CampoDelete, UserAuthDelete, ExercicioDelete, TrainingExercicioDelete
-from .views import CampoList, UserAuthList, ExercicioList, TrainingExercicioList
+from .views import (
+    CampoCreate, UserAuthCreate, ExercicioCreate, TrainingExercicioCreate, AvaliacaoCreate,
+    CampoUpdate, UserAuthUpdate, ExercicioUpdate, TrainingExercicioUpdate, AvaliacaoUpdate,
+    CampoDelete, UserAuthDelete, ExercicioDelete, TrainingExercicioDelete, AvaliacaoDelete,
+    CampoList, UserAuthList, ExercicioList, TrainingExercicioList, AvaliacaoList
+)
 
 urlpatterns = [
     path('cadastrar/campo/', CampoCreate.as_view(), name='cadastrar-campo'),
@@ -18,8 +20,8 @@ urlpatterns = [
 
     path('listar/campos/', CampoList.as_view(), name='listar-campos'),
     path('listar/usersauth/', UserAuthList.as_view(), name='listar-usersauth'),
-   
-     # URLs para Exercicio
+
+    # URLs para Exercicio
     path('cadastrar/exercicio/', ExercicioCreate.as_view(), name='cadastrar-exercicio'),
     path('editar/exercicio/<int:pk>/', ExercicioUpdate.as_view(), name='editar-exercicio'),
     path('excluir/exercicio/<int:pk>/', ExercicioDelete.as_view(), name='excluir-exercicio'),
@@ -31,4 +33,10 @@ urlpatterns = [
     path('excluir/training-exercicio/<int:pk>/', TrainingExercicioDelete.as_view(), name='excluir-training-exercicio'),
     path('listar/training-exercicios/', TrainingExercicioList.as_view(), name='listar-training-exercicios'),
 
+    # URLs para Avaliação
+    path('cadastrar/avaliacao/', AvaliacaoCreate.as_view(), name='cadastrar-avaliacao'),
+    path('editar/avaliacao/<int:pk>/', AvaliacaoUpdate.as_view(), name='editar-avaliacao'),
+    path('excluir/avaliacao/<int:pk>/', AvaliacaoDelete.as_view(), name='excluir-avaliacao'),
+    path('listar/avaliacoes/', AvaliacaoList.as_view(), name='listar-avaliacoes'),
 ]
+

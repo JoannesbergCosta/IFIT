@@ -41,3 +41,33 @@ class TrainingExercicio(models.Model):
     def __str__(self):
         exercicios = ', '.join([exercise.exercicio for exercise in self.exercises.all()])
         return f"Programa: {self.descricao} | Exercícios: {exercicios}"
+    
+    
+class Avaliacao(models.Model):
+    usuario = models.ForeignKey(User, on_delete=models.CASCADE)
+    data = models.DateField()
+    hora = models.TimeField()  
+    idade = models.PositiveIntegerField()  
+    peso = models.DecimalField(max_digits=5, decimal_places=2)  
+    altura = models.DecimalField(max_digits=4, decimal_places=2)  
+    pescoco = models.DecimalField(max_digits=5, decimal_places=2)  
+    ombro_dir = models.DecimalField(max_digits=5, decimal_places=2)
+    ombro_esq = models.DecimalField(max_digits=5, decimal_places=2)
+    braco_relaxado_dir = models.DecimalField(max_digits=5, decimal_places=2)
+    braco_relaxado_esq = models.DecimalField(max_digits=5, decimal_places=2)
+    braco_contraido_dir = models.DecimalField(max_digits=5, decimal_places=2)
+    braco_contraido_esq = models.DecimalField(max_digits=5, decimal_places=2)
+    antebraco_dir = models.DecimalField(max_digits=5, decimal_places=2)
+    antebraco_esq = models.DecimalField(max_digits=5, decimal_places=2)
+    torax_relaxado = models.DecimalField(max_digits=5, decimal_places=2)
+    torax_contraido = models.DecimalField(max_digits=5, decimal_places=2)
+    cintura = models.DecimalField(max_digits=5, decimal_places=2)
+    quadril = models.DecimalField(max_digits=5, decimal_places=2)
+    coxa_dir = models.DecimalField(max_digits=5, decimal_places=2)
+    coxa_esq = models.DecimalField(max_digits=5, decimal_places=2)
+    panturrilha_dir = models.DecimalField(max_digits=5, decimal_places=2)
+    panturrilha_esq = models.DecimalField(max_digits=5, decimal_places=2)
+
+    def __str__(self):
+        return f"Avaliação de {self.usuario.nome} | Data: {self.data} | Hora: {self.hora}"
+
