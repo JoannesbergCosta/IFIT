@@ -7,7 +7,7 @@
     Lista de Usuários Registrados 
 </h3>
 
-<a href="{% url 'cadastrar-userauth' %}" class="btn btn-primary btn-sm">Adicionar Usuário</a>
+<a href="{% url 'registrar' %}" class="btn btn-primary btn-sm">Adicionar Usuário</a>
 <hr>
 <div class="table-responsive">
 </div>
@@ -16,13 +16,12 @@
         <th>ID</th> <!--SO TESTE-->
         <th>Nome</th>
         <th>Matrícula</th>
-        <th>Opções</th>
     </tr>
 
     {% for user in object_list %}
     <tr>
         <td>{{ user.pk }}</td>
-        <td>{{ user.user }}</td>
+        <td>{{ user.usuario }}</td>
         <td>{{ user.matricula }}</td>
     </tr>
     {% empty %}
