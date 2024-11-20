@@ -40,7 +40,7 @@ class AvaliacaoCreate(GroupRequiredMixin, LoginRequiredMixin, CreateView):
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
 
-        context['titulo'] = "Cadastrar Avaliação"
+        context['titulo'] = "Cadastrar Avaliação Fisica"
         context['botao'] = "Cadastrar Avaliação"
 
         return context
