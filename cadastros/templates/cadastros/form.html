@@ -14,17 +14,17 @@
 </head>
 <body class="bg-light">
 <div class="container-fluid vh-100 d-flex justify-content-center align-items-center">
-    <div class="col-12 col-md-8 col-lg-6">
+    <div class="col-12 col-md-6 col-lg-4">
         {% if request.user.is_authenticated %}
-            <div class="card shadow-lg">
+            <div class="card shadow-sm">
                 <div class="card-header text-center bg-primary text-white">
-                    <h3>{{ titulo }}</h3>
+                    <h4>{{ titulo }}</h4>
                 </div>
                 <div class="card-body">
                     <form method="POST" novalidate>
                         {% csrf_token %}
                         {{ form|crispy }}
-                        <button type="submit" class="btn btn-primary btn-lg w-100 mt-4">{{ botao }}</button>
+                        <button type="submit" class="btn btn-primary btn-lg w-100 mt-3">{{ botao }}</button>
                     </form>
                 </div>
             </div>
@@ -33,7 +33,7 @@
                 Você precisa estar logado para cadastrar um registro.
             </div>
             <div class="d-flex justify-content-center mt-3">
-                <a href="{% url 'login' %}" class="btn btn-success btn-lg w-50">Fazer Login</a>
+                <a href="{% url 'login' %}" class="btn btn-success btn-lg w-100">Fazer Login</a>
             </div>
         {% endif %}
     </div>

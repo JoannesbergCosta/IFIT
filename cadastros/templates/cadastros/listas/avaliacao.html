@@ -3,44 +3,93 @@
 {% load static %}
 
 {% block conteudo %}
-<h3>
-    Avaliações
-</h3>
+<div class="container my-5">
+    <h3 class="text-center mb-5">Avaliações</h3>
 
-<a href="{% url 'cadastrar-avaliacao' %}" class="btn btn-primary btn-sm">Adicionar Avaliação Fisica</a>
-<hr>
-<div class="table-responsive">
+    <div class="d-flex justify-content-between mb-4">
+        <a href="{% url 'cadastrar-avaliacao' %}" class="btn btn-primary btn-sm">Adicionar Avaliação Física</a>
+    </div>
 
+    <div class="row">
+        {% for avaliacao in object_list %}
+        <div class="col-md-12 mb-4">
+            <div class="card shadow-lg">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="m-0 text-center">Avaliação #{{ avaliacao.pk }}</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <!-- Coluna 1: Dados Básicos -->
+                        <div class="col-md-4 mb-3">
+                            <ul class="list-unstyled">
+                                <li><strong>Usuário:</strong> {{ avaliacao.usuario }}</li>
+                                <li><strong>Data:</strong> {{ avaliacao.data }}</li>
+                                <li><strong>Hora:</strong> {{ avaliacao.hora }}</li>
+                                <li><strong>Peso:</strong> {{ avaliacao.peso }} kg</li>
+                                <li><strong>Altura:</strong> {{ avaliacao.altura }} cm</li>
+                                <li><strong>Idade:</strong> {{ avaliacao.idade }} anos</li>
+                            </ul>
+                        </div>
+
+                        <!-- Coluna 2: Medidas Corporais -->
+                        <div class="col-md-8">
+                            <h6 class="mb-4">Medidas Corporais</h6>
+                            <div class="row">
+                                <div class="col-6">
+                                    <ul class="list-unstyled">
+                                        <li><strong>Pescoço:</strong> {{ avaliacao.pescoco }} cm</li>
+                                        <li><strong>Ombro Direito:</strong> {{ avaliacao.ombro_dir }} cm</li>
+                                        <li><strong>Ombro Esquerdo:</strong> {{ avaliacao.ombro_esq }} cm</li>
+                                        <li><strong>Braço Relaxado Direito:</strong> {{ avaliacao.braco_relaxado_dir }} cm</li>
+                                        <li><strong>Braço Relaxado Esquerdo:</strong> {{ avaliacao.braco_relaxado_esq }} cm</li>
+                                        <li><strong>Braço Contraído Direito:</strong> {{ avaliacao.braco_contraido_dir }} cm</li>
+                                    </ul>
+                                </div>
+                                <div class="col-6">
+                                    <ul class="list-unstyled">
+                                        <li><strong>Braço Contraído Esquerdo:</strong> {{ avaliacao.braco_contraido_esq }} cm</li>
+                                        <li><strong>Antebraço Direito:</strong> {{ avaliacao.antebraco_dir }} cm</li>
+                                        <li><strong>Antebraço Esquerdo:</strong> {{ avaliacao.antebraco_esq }} cm</li>
+                                        <li><strong>Torax Relaxado:</strong> {{ avaliacao.torax_relaxado }} cm</li>
+                                        <li><strong>Torax Contraído:</strong> {{ avaliacao.torax_contraido }} cm</li>
+                                        <li><strong>Cintura:</strong> {{ avaliacao.cintura }} cm</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    <ul class="list-unstyled">
+                                        <li><strong>Quadril:</strong> {{ avaliacao.quadril }} cm</li>
+                                        <li><strong>Coxa Direita:</strong> {{ avaliacao.coxa_dir }} cm</li>
+                                        <li><strong>Coxa Esquerda:</strong> {{ avaliacao.coxa_esq }} cm</li>
+                                    </ul>
+                                </div>
+                                <div class="col-6">
+                                    <ul class="list-unstyled">
+                                        <li><strong>Panturrilha Direita:</strong> {{ avaliacao.panturrilha_dir }} cm</li>
+                                        <li><strong>Panturrilha Esquerda:</strong> {{ avaliacao.panturrilha_esq }} cm</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr>
+
+                    <div class="d-flex justify-content-between mt-4">
+                        <a href="{% url 'editar-avaliacao' avaliacao.pk %}" class="btn btn-warning btn-sm" title="Editar">Editar</a>
+                        <a href="{% url 'excluir-avaliacao' avaliacao.pk %}" class="btn btn-danger btn-sm" title="Excluir">Excluir</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-12">
+            <div class="alert alert-info text-center">
+                Nenhuma Avaliação registrada.
+            </div>
+        </div>
+        {% endfor %}
+    </div>
 </div>
-<table class="table table-striped">
-    <tr>
-        <th>ID</th> <!--SO TESTE-->
-        <th>Usuário</th>
-        <th>Data</th>
-        <th>Hora</th>
-        <th>Peso</th>
-        <th>Altura</th>
-        <th>Idade</th>
-        <th>Ações</th>
-    </tr>
-    {% for avaliacao in object_list %}
-    <tr>
-        <td>{{ avaliacao.pk }}</td>
-        <td>{{ avaliacao.usuario }}</td>
-        <td>{{ avaliacao.data }}</td>
-        <td>{{ avaliacao.hora }}</td>
-        <td>{{ avaliacao.peso }}</td>
-        <td>{{ avaliacao.altura }}</td>
-        <td>{{ avaliacao.idade }}</td>
-        <td>
-            <a href="{% url 'editar-avaliacao' avaliacao.pk %}" class="btn btn-warning btn-sm" title="Editar">Editar</a>
-            <a href="{% url 'excluir-avaliacao' avaliacao.pk %}" class="btn btn-danger btn-sm" title="Excluir">Excluir</a>
-        </td> 
-    </tr>
-    {% empty %}
-    <tr>
-        <td colspan="7">Nenhuma Avaliação registrada.</td>
-    </tr>
-    {% endfor %}
-</table>
 {% endblock %}

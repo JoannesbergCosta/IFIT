@@ -107,8 +107,16 @@ class AvaliacaoUpdate(GroupRequiredMixin, LoginRequiredMixin, UpdateView):
               'braco_contraido_dir', 'braco_contraido_esq', 'antebraco_dir', 
               'antebraco_esq', 'torax_relaxado', 'torax_contraido', 'cintura', 
               'quadril', 'coxa_dir', 'coxa_esq', 'panturrilha_dir', 'panturrilha_esq']
-    template_name = 'cadastros/form.html'
+    template_name = 'cadastros/form_avaliacao.html'
     success_url = reverse_lazy('listar-avaliacoes')
+
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+
+        context['titulo'] = "Editar Cadastro de Avaliação"
+        context['botao'] = "Salvar"
+
+        return context
 
 
 class TrainingExercicioUpdate(GroupRequiredMixin, LoginRequiredMixin, UpdateView):

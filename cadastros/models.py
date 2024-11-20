@@ -58,5 +58,7 @@ class Avaliacao(models.Model):
     panturrilha_esq = models.DecimalField(max_digits=5, decimal_places=2)
 
     def __str__(self):
-        return f"Avaliação de {self.usuario.nome} | Data: {self.data} | Hora: {self.hora}"
+        # Usando first_name e last_name do usuário para criar o nome completo
+        return f"Avaliação de {self.usuario.first_name} {self.usuario.last_name} | Data: {self.data} | Hora: {self.hora}"
+
 
