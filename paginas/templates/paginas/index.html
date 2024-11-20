@@ -348,7 +348,7 @@
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="userDropdown">
-                                <a class="dropdown-item" href="#">
+                                <a class="dropdown-item" href="{% url 'atualizar-dados' %}">
                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Profile
                                 </a>
@@ -379,7 +379,11 @@
                     <h1 class="h3 mb-4 text-gray-800">IFIT</h1>
                     
                     {% block conteudo %}
-                    <!-- Aqui será o conteúdo do template que estende -->
+                    {% if user.perfil.nome_completo %}
+                    Bem vindo ao site, {{ user.perfil.nome_completo }}.
+                    {% else %}
+                    Voçê precisa completar seu cadastro. Acesse os <a href="{% url 'atualizar-dados' %}">Meus dados</a> para atualizar.
+                    {% endif %}
                     {% endblock %}
                 </div>
                 <!-- /.container-fluid -->
