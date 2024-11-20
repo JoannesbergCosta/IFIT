@@ -48,6 +48,11 @@
 
             <!-- Nav Item - index -->
             <li class="nav-item">
+                <a class="nav-link" href="{% url 'registrar' %}">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span>Cadastrar Usuario</span></a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link" href="{% url 'listar-usersauth' %}">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Usuarios</span></a>
@@ -57,7 +62,7 @@
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Programas de Treino</span></a>
             </li>
-
+            
             <!-- Divider -->
             <hr class="sidebar-divider">
 
@@ -71,13 +76,12 @@
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
                     aria-expanded="true" aria-controls="collapseTwo">
                     <i class="fas fa-fw fa-cog"></i>
-                    <span>Administrativo</span>
+                    <span>Avaliações</span>
                 </a>
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="{% url 'sobre' %}">Matriculas</a>
-                        <a class="collapse-item" href="cards.html">Alunos</a>
-                        <a class="collapse-item" href="cards.html">Funcionarios</a>
+                        <a class="collapse-item" href="{% url 'cadastrar-avaliacao' %}">Cadastrar</a>
+                        <a class="collapse-item" href="{% url 'listar-avaliacoes' %}">Todas as Avaliações</a>
                     </div>
                 </div>
             </li>
@@ -105,12 +109,9 @@
             <hr class="sidebar-divider">
 
             <!-- Heading -->
-            <div class="sidebar-heading">
-                Addons
-            </div>
 
             <!-- Nav Item - Pages Collapse Menu -->
-            <li class="nav-item active">
+            <!--<li class="nav-item active">
                 <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true"
                     aria-controls="collapsePages">
                     <i class="fas fa-fw fa-folder"></i>
@@ -129,9 +130,9 @@
                         <a class="collapse-item active" href="blank.html">Blank Page</a>
                     </div>
                 </div>
-            </li>
+            </li>>
 
-            <!-- Nav Item - Utilities Collapse Menu -->
+            <Nav Item - Utilities Collapse Menu -->
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
                     aria-expanded="true" aria-controls="collapseUtilities">
@@ -141,8 +142,7 @@
                 <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="utilities-color.html">Alterar senha</a>
-                        <a class="collapse-item" href="utilities-border.html">Editar Perfil do Usuario</a>
+                        <a class="collapse-item" href="{% url 'atualizar-dados' %}">Meu Perfil</a>
                         <a class="collapse-item" href="utilities-animation.html">Ajuda</a>
                         <a class="collapse-item" href="utilities-other.html">Sair</a>
                     </div>

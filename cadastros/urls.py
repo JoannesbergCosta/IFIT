@@ -2,24 +2,21 @@
 from django.urls import path
 
 from .views import (
-    CampoCreate, UserAuthCreate, ExercicioCreate, TrainingExercicioCreate, AvaliacaoCreate,
-    CampoUpdate, UserAuthUpdate, ExercicioUpdate, TrainingExercicioUpdate, AvaliacaoUpdate,
-    CampoDelete, UserAuthDelete, ExercicioDelete, TrainingExercicioDelete, AvaliacaoDelete,
-    CampoList, UserAuthList, ExercicioList, TrainingExercicioList, AvaliacaoList
+    CampoCreate, ExercicioCreate, TrainingExercicioCreate, AvaliacaoCreate,
+    CampoUpdate, ExercicioUpdate, TrainingExercicioUpdate, AvaliacaoUpdate,
+    CampoDelete, ExercicioDelete, TrainingExercicioDelete, AvaliacaoDelete,
+    CampoList, ExercicioList, TrainingExercicioList, AvaliacaoList
 )
 
 urlpatterns = [
     path('cadastrar/campo/', CampoCreate.as_view(), name='cadastrar-campo'),
-    path('cadastrar/userauth/', UserAuthCreate.as_view(), name='cadastrar-userauth'),
 
     path('editar/campo/<int:pk>/', CampoUpdate.as_view(), name='editar-campo'),
-    path('editar/userauth/<int:pk>/', UserAuthUpdate.as_view(), name='editar-userauth'),
 
     path('excluir/campo/<int:pk>/', CampoDelete.as_view(), name='excluir-campo'),
-    path('excluir/userauth/<int:pk>/', UserAuthDelete.as_view(), name='excluir-userauth'),
 
     path('listar/campos/', CampoList.as_view(), name='listar-campos'),
-    path('listar/usersauth/', UserAuthList.as_view(), name='listar-usersauth'),
+    #path('listar/usersauth/', UserAuthList.as_view(), name='listar-usersauth'),
 
     # URLs para Exercicio
     path('cadastrar/exercicio/', ExercicioCreate.as_view(), name='cadastrar-exercicio'),

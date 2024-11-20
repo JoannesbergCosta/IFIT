@@ -52,3 +52,6 @@ class PerfilUpdate(UpdateView):
         context['titulo'] = "Meus dados"
         context['botao'] = "Atualizar"
         return context
+
+
+ 

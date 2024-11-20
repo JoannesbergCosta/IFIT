@@ -1,7 +1,7 @@
 from django.db.models.query import QuerySet
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic.list import ListView
-from .models import Campo, UserAuth, Exercicio, TrainingExercicio, Avaliacao
+from .models import Campo, Exercicio, TrainingExercicio, Avaliacao
 from django.urls import reverse_lazy
 from .forms import TrainingExercicioForm
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -19,14 +19,6 @@ class CampoCreate(LoginRequiredMixin, CreateView):
     template_name = 'cadastros/form.html'
     success_url = reverse_lazy('listar-campos')
 
-class UserAuthCreate(GroupRequiredMixin, LoginRequiredMixin, CreateView):
-    login_url = reverse_lazy('login')
-    group_required = u"Administrador"
-    model = UserAuth  
-    fields = ['user', 'matricula', 'campo']  
-    template_name = 'cadastros/form.html'
-    success_url = reverse_lazy('listar-usersauth')  
-
 class ExercicioCreate(GroupRequiredMixin, LoginRequiredMixin, CreateView):
     login_url = reverse_lazy('login')
     group_required = u"Administrador"
@@ -35,7 +27,9 @@ class ExercicioCreate(GroupRequiredMixin, LoginRequiredMixin, CreateView):
     template_name = 'cadastros/form.html'
     success_url = reverse_lazy('listar-exercicios')
 
-class AvaliacaoCreate(LoginRequiredMixin, CreateView):
+class AvaliacaoCreate(GroupRequiredMixin, LoginRequiredMixin, CreateView):
+    login_url = reverse_lazy('login')
+    group_required = u"Administrador"
     model = Avaliacao
     fields = ['usuario', 'data', 'hora', 'idade', 'peso', 'altura', 'pescoco', 
               'ombro_dir', 'ombro_esq', 'braco_relaxado_dir', 'braco_relaxado_esq', 
@@ -91,14 +85,6 @@ class CampoUpdate(GroupRequiredMixin, LoginRequiredMixin, UpdateView):
     template_name = 'cadastros/form.html'
     success_url = reverse_lazy('listar-campos')
 
-class UserAuthUpdate(GroupRequiredMixin, LoginRequiredMixin, UpdateView):
-    login_url = reverse_lazy('login')
-    group_required = u"Administrador"
-    model = UserAuth  
-    fields = ['matricula', 'campo']
-    template_name = 'cadastros/form.html'
-    success_url = reverse_lazy('listar-usersauth')
-
 class ExercicioUpdate(GroupRequiredMixin, LoginRequiredMixin, UpdateView):
     login_url = reverse_lazy('login')
     group_required = u"Administrador"
@@ -152,13 +138,6 @@ class CampoDelete(GroupRequiredMixin, LoginRequiredMixin, DeleteView):
     template_name = 'cadastros/form-excluir.html'
     success_url = reverse_lazy('listar-campos')
 
-class UserAuthDelete(GroupRequiredMixin, LoginRequiredMixin, DeleteView):
-    login_url = reverse_lazy('login')
-    group_required = u"Administrador"
-    model = UserAuth  
-    template_name = 'cadastros/form-excluir.html'
-    success_url = reverse_lazy('listar-usersauth')  
-
 class ExercicioDelete(GroupRequiredMixin, LoginRequiredMixin, DeleteView):
     login_url = reverse_lazy('login')
     group_required = u"Administrador"
@@ -194,11 +173,6 @@ class CampoList(LoginRequiredMixin, ListView):
     login_url = reverse_lazy('login')
     model = Campo
     template_name = 'cadastros/listas/campo.html'
-
-class UserAuthList(LoginRequiredMixin, ListView):
-    login_url = reverse_lazy('login')
-    model = UserAuth
-    template_name = 'cadastros/listas/userauth.html'
 
 class ExercicioList(LoginRequiredMixin, ListView):
     login_url = reverse_lazy('login')

@@ -24,10 +24,6 @@
         <td>{{ user.pk }}</td>
         <td>{{ user.user }}</td>
         <td>{{ user.matricula }}</td>
-        <td>
-            <a href="{% url 'editar-userauth' user.pk %}" class="btn btn-warning btn-sm" title="Editar">Editar</a>
-            <a href="{% url 'excluir-userauth' user.pk %}" class="btn btn-danger btn-sm" title="Excluir">Excluir</a>
-        </td> 
     </tr>
     {% empty %}
     <tr>

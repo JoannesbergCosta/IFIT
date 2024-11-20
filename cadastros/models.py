@@ -8,18 +8,6 @@ class Campo(models.Model):
     def __str__(self):
         return f"[Campo: {self.nome}]"
 
-class UserAuth(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)  
-    matricula = models.IntegerField(
-        verbose_name="Matrícula",
-        validators=[MinValueValidator(10000000000000), MaxValueValidator(99999999999999)]
-    )
-    campo = models.ForeignKey(Campo, on_delete=models.PROTECT)
-    nome = models.CharField(max_length=100)
-
-    def __str__(self):
-        return f"Usuário: {self.nome} | Matrícula: {self.matricula} | Campo: {self.campo.nome}"
-
 class Exercicio(models.Model):
     exercicio = models.CharField(max_length=50)
     tipo = models.CharField(max_length=10)
