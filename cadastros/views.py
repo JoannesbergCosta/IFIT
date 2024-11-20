@@ -6,9 +6,7 @@ from django.urls import reverse_lazy
 from .forms import TrainingExercicioForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from braces.views import GroupRequiredMixin
-
 from django.http import HttpResponseForbidden
-
 from django.shortcuts import get_object_or_404, redirect
 
 # Create Views
@@ -61,16 +59,16 @@ class TrainingExercicioCreate(GroupRequiredMixin, LoginRequiredMixin, CreateView
         
         url = super().form_valid(form)
 
-        # Aqui, associamos os exercícios com as informações adicionais
+        
         exercises = form.cleaned_data['exercises']
         for i, exercise in enumerate(exercises):
-            # Aqui você pode pegar os dados do formulário para cada exercício
+            
             series = form.cleaned_data.get(f'series_{i}')
             repeticoes = form.cleaned_data.get(f'repeticoes_{i}')
             carga = form.cleaned_data.get(f'carga_{i}')
             descanso = form.cleaned_data.get(f'descanso_{i}')
             
-            # Associe os exercícios com o training_exercicio e seus dados
+            
             form.instance.exercises.add(exercise)
 
         return url

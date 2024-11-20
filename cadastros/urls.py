@@ -10,13 +10,9 @@ from .views import (
 
 urlpatterns = [
     path('cadastrar/campo/', CampoCreate.as_view(), name='cadastrar-campo'),
-
     path('editar/campo/<int:pk>/', CampoUpdate.as_view(), name='editar-campo'),
-
     path('excluir/campo/<int:pk>/', CampoDelete.as_view(), name='excluir-campo'),
-
     path('listar/campos/', CampoList.as_view(), name='listar-campos'),
-    #path('listar/usersauth/', UserAuthList.as_view(), name='listar-usersauth'),
 
     # URLs para Exercicio
     path('cadastrar/exercicio/', ExercicioCreate.as_view(), name='cadastrar-exercicio'),

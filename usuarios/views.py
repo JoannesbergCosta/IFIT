@@ -9,28 +9,19 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import logout
 
 
-def custom_logout_view(request):
-    # Realiza o logout do usuário e redireciona para a página de login
-    logout(request)
-    return redirect('login')
-
-
 class UsuarioCreate(CreateView):
     template_name = "cadastros/form.html"
     form_class = UsuarioForm
     success_url = reverse_lazy('login')
 
     def form_valid(self, form):
-        # Criar o grupo 'Docente' caso não exista
+        
         grupo, _ = Group.objects.get_or_create(name="Docente")
 
-        # Salvar o formulário do usuário
         url = super().form_valid(form)
 
-        # Adicionar o usuário ao grupo 'Docente'
         self.object.groups.add(grupo)
-
-        # Criar o perfil do usuário
+        
         Perfil.objects.get_or_create(usuario=self.object)
 
         return url
@@ -43,16 +34,15 @@ class UsuarioCreate(CreateView):
 
 
 class PerfilList(ListView):
-    login_url = reverse_lazy('login')  # Redireciona para login caso o usuário não esteja autenticado
+    login_url = reverse_lazy('login')  
     model = Perfil
     template_name = 'cadastros/listas/userauth.html'
 
     def get_queryset(self):
-        # Verifica se o usuário é staff ou não
         if self.request.user.is_staff:
-            return Perfil.objects.all()  # Se for staff, retorna todos os perfis
+            return Perfil.objects.all()  
         else:
-            return Perfil.objects.filter(usuario=self.request.user)  # Caso contrário, apenas o perfil do usuário logado
+            return Perfil.objects.filter(usuario=self.request.user)  
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
@@ -67,7 +57,6 @@ class PerfilUpdate(UpdateView):
     success_url = reverse_lazy("inicio")
 
     def get_object(self, queryset=None):
-        # Obtém o perfil do usuário logado, criando-o caso não exista
         perfil, _ = Perfil.objects.get_or_create(usuario=self.request.user)
         return perfil
 
@@ -76,3 +65,8 @@ class PerfilUpdate(UpdateView):
         context['titulo'] = "Meus dados"
         context['botao'] = "Atualizar"
         return context
+    
+
+def custom_logout_view(request):
+    logout(request)
+    return redirect('login')
