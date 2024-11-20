@@ -48,15 +48,23 @@
 
             <!-- Nav Item - index -->
             <li class="nav-item">
-                <a class="nav-link" href="{% url 'registrar' %}">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Cadastrar Usuario</span></a>
+                {% if user.is_staff %}
+                    <a class="nav-link" href="{% url 'registrar' %}">
+                        <i class="fas fa-fw fa-tachometer-alt"></i>
+                        <span>Cadastrar Usuario</span>
+                    </a>
+                {% endif %}
             </li>
+            
             <li class="nav-item">
-                <a class="nav-link" href="{% url 'listar-usersauth' %}">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Usuarios</span></a>
+                {% if user.is_staff %}
+                    <a class="nav-link" href="{% url 'listar-usersauth' %}">
+                        <i class="fas fa-fw fa-tachometer-alt"></i>
+                        <span>Usuarios</span>
+                    </a>
+                {% endif %}
             </li>
+            
             <li class="nav-item">
                 <a class="nav-link" href="{% url 'listar-training-exercicios' %}">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
@@ -80,10 +88,22 @@
                 </a>
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="{% url 'cadastrar-avaliacao' %}">Cadastrar</a>
-                        <a class="collapse-item" href="{% url 'listar-avaliacoes' %}">Todas as Avaliações</a>
+                        {% if user.is_staff %}
+                            <a class="collapse-item" href="{% url 'cadastrar-avaliacao' %}">Cadastrar</a>
+                        {% endif %}
+                        <a class="collapse-item" href="{% url 'listar-avaliacoes' %}">
+                            {% if user.is_staff %}
+                                Todas as Avaliações
+                            {% elif user.is_authenticated %}
+                                Minha Avaliação
+                            {% else %}
+                                Todas as Avaliações
+                            {% endif %}
+                        </a>
                     </div>
                 </div>
+                
+                
             </li>
 
             <!-- Nav Item - Utilities Collapse Menu -->
@@ -120,7 +140,7 @@
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="{% url 'atualizar-dados' %}">Meu Perfil</a>
                         <a class="collapse-item" href="utilities-animation.html">Ajuda</a>
-                        <a class="collapse-item" href="utilities-other.html">Sair</a>
+                        <a class="collapse-item" href="{% url 'logout' %}   ">Sair</a>
                     </div>
                 </div>
             </li>
@@ -326,20 +346,16 @@
                                 aria-labelledby="userDropdown">
                                 <a class="dropdown-item" href="{% url 'atualizar-dados' %}">
                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Profile
+                                    Perfil
                                 </a>
                                 <a class="dropdown-item" href="#">
                                     <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Settings
                                 </a>
-                                <a class="dropdown-item" href="#">
-                                    <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Activity Log
-                                </a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Logout
+                                    Sair
                                 </a>
                             </div>
                         </li>
@@ -361,29 +377,16 @@
                     Voçê precisa completar seu cadastro. Acesse os <a href="{% url 'atualizar-dados' %}">Meus dados</a> para atualizar.
                     {% endif %}
                     {% endblock %}
+                    
                 </div>
                 <!-- /.container-fluid -->
-
+                
 
             </div>
             <!-- End of Main Content -->
 
             <!-- Footer -->
-            <footer class="sticky-footer bg-white">
-                <div class="container my-auto">
-                    <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Your Website 2020</span>
-                        <form id="logout-form" action="{% url 'logout' %}" method="POST" style="display: none;">
-                            {% csrf_token %}
-                        </form>
-                        
-                        <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                            Logout
-                        </a>
-                        
-                    </div>
-                </div>
-            </footer>
+        
             <!-- End of Footer -->
 
         </div>
@@ -403,16 +406,16 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Pronto para sair?</h5>
                     <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    Select "Logout" below if you are ready to end your current session.
+                    Selecione "Sair" abaixo se você estiver pronto para encerrar sua sessão atual.
                 </div>
                 <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar   </button>
                     
                     <!-- Formulário de Logout que será submetido -->
                     <form id="logout-form" action="{% url 'logout' %}" method="POST" style="display: none;">
@@ -421,7 +424,7 @@
                 
                     <!-- Botão que submete o formulário de logout -->
                     <a class="btn btn-primary" href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                        Logout
+                        Sair
                     </a>
                 </div>
                 

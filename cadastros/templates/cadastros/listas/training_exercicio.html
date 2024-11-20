@@ -18,8 +18,11 @@
 
     <!-- Botão superior para cadastrar -->
     <div class="text-center mb-4">
-        <a href="{% url 'cadastrar-training-exercicio' %}" class="btn btn-success btn-lg shadow-sm">Cadastrar um novo Programa de Treino</a>
+        {% if user.is_staff %}
+            <a href="{% url 'cadastrar-training-exercicio' %}" class="btn btn-success btn-lg shadow-sm">Cadastrar um novo Programa de Treino</a>
+        {% endif %}
     </div>
+    
 
     <div class="row flex-nowrap overflow-auto">
         {% for training_exercicio in object_list %}
@@ -81,8 +84,11 @@
 
     <!-- Botão inferior para adicionar exercício -->
     <div class="text-center mt-4">
-        <a href="{% url 'cadastrar-exercicio' %}" class="btn btn-outline-primary btn-lg shadow-sm" style="border-width: 2px;">+ Adicionar Exercício</a>
+        {% if user.is_staff %}
+            <a href="{% url 'cadastrar-exercicio' %}" class="btn btn-outline-primary btn-lg shadow-sm" style="border-width: 2px;">+ Adicionar Exercício</a>
+        {% endif %}
     </div>
+    
 
 </div>
 
