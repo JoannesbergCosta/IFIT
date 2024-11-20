@@ -4,7 +4,7 @@ from .models import TrainingExercicio, Exercicio
 class TrainingExercicioForm(forms.ModelForm):
     class Meta:
         model = TrainingExercicio
-        fields = ['exercises', 'series', 'repeticoes', 'carga', 'descanso', 'descricao']
+        fields = ['usuario','exercises', 'series', 'repeticoes', 'carga', 'descanso', 'descricao']
 
     # Permitir selecionar múltiplos exercícios
     exercises = forms.ModelMultipleChoiceField(
