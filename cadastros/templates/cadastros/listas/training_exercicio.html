@@ -66,13 +66,16 @@
                     </table>
                 </div>
                 <div class="text-center mt-3">
-                    <a href="{% url 'editar-training-exercicio' training_exercicio.pk %}" class="btn btn-warning btn-sm" title="Editar">
-                        <i class="fas fa-edit"></i> Editar
-                    </a>
-                    <a href="{% url 'excluir-training-exercicio' training_exercicio.pk %}" class="btn btn-danger btn-sm" title="Excluir">
-                        <i class="fas fa-trash-alt"></i> Excluir
-                    </a>
+                    {% if user.is_staff %}
+                        <a href="{% url 'editar-training-exercicio' training_exercicio.pk %}" class="btn btn-warning btn-sm" title="Editar">
+                            <i class="fas fa-edit"></i> Editar
+                        </a>
+                        <a href="{% url 'excluir-training-exercicio' training_exercicio.pk %}" class="btn btn-danger btn-sm" title="Excluir">
+                            <i class="fas fa-trash-alt"></i> Excluir
+                        </a>
+                    {% endif %}
                 </div>
+                
             </div>
         </div>
         {% empty %}
