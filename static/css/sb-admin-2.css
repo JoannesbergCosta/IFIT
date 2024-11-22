@@ -10860,12 +10860,6 @@ a:focus {
   }
 }
 
-.bg-login-image {
-  background: url("https://source.unsplash.com/K4mSJ7kc0As/600x800");
-  background-position: center;
-  background-size: cover;
-}
-
 .bg-register-image {
   background: url("https://source.unsplash.com/Mv9hjnEUHR4/600x800");
   background-position: center;
@@ -11278,4 +11272,25 @@ footer.sticky-footer .copyright {
 
 body.sidebar-toggled footer.sticky-footer {
   width: 100%;
+}
+
+.form-row {
+  justify-content: center;
+}
+
+/* Ajustando o tamanho do botão */
+.botao-enviar {
+  width: 200px;        /* Define a largura do botão */
+  height: 50px;        /* Define a altura do botão */
+  padding: 10px;       /* Adiciona espaçamento interno */
+  font-size: 18px;     /* Define o tamanho da fonte */
+  background-color: #4CAF50; /* Cor de fundo do botão */
+  color: white;        /* Cor do texto */
+  border: none;        /* Retira a borda padrão */
+  border-radius: 5px;  /* Adiciona bordas arredondadas */
+  cursor: pointer;     /* Altera o cursor para indicar interatividade */
+}
+
+.botao:hover {
+  background-color: #45a049; /* Muda a cor ao passar o mouse */
 }
