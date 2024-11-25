@@ -1,6 +1,7 @@
 from django.db import models
 from django.core.exceptions import ValidationError
-from profiles.models import CustomUser
+from django.contrib.auth.models import User
+from cadastros.models import TrainingExercicio
 
 class Task(models.Model):
     id = models.BigAutoField(primary_key=True)
@@ -14,8 +15,8 @@ class Task(models.Model):
     start_time = models.TimeField()
     end_time = models.TimeField()
 
-    usuario = models.ForeignKey(CustomUser, on_delete=models.PROTECT)
-    turma = models.ForeignKey('classes.Turma', on_delete=models.CASCADE)
+    usuario = models.ForeignKey(User, on_delete=models.CASCADE)
+    programa_treino = models.ForeignKey(TrainingExercicio, on_delete=models.PROTECT)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

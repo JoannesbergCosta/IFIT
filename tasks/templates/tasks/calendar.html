@@ -2,7 +2,7 @@
 {% load static %}
 {% block title %}Home{% endblock %}
 
-{% block content %}
+{% block conteudo %}
 <style>
     #calendar-container {
         display: flex;
@@ -65,7 +65,7 @@
                 <div class="card mb-2">
                     <div class="card-body">
                         <h5 class="card-title">{{ event.title }}</h5>
-                        <p class="card-text"><strong>Turma:</strong> {{ event.turma }}</p>
+                        <p class="card-text"><strong>Usuario:</strong> {{ event.user }}</p>
                         <p class="card-text"><strong>Descrição:</strong> {{ event.description }}</p>
                         <a href="/task/{{ event.id }}" class="btn btn-primary btn-sm">Ver Detalhes</a>
                     </div>

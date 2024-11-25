@@ -4,7 +4,7 @@ from .views import TaskListView, TaskDetailView, TaskCreateView, TaskUpdateView,
 
 urlpatterns = [
     path('dashboard/', EventCountView.as_view(), name='dashboard'),
-    path('', CalendarView.as_view(), name='calendar'),
+    path('Calendar/', CalendarView.as_view(), name='calendar'),
     path('list/', TaskListView.as_view(), name='task-list'),
     path('chart-year/', ChartYear.as_view(), name='chart-year'),
     path('task/<int:pk>/', TaskDetailView.as_view(), name='task-view'),
