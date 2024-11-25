@@ -1,0 +1,118 @@
+{% extends 'paginas/index.html' %}
+{% load static %}
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<style>
+    #calendar-container {
+        display: flex;
+        flex-wrap: wrap; /* Torna flexível para dispositivos menores */
+        justify-content: center;
+        gap: 20px; /* Espaçamento entre os elementos */
+    }
+
+    #calendar {
+        width: 100%;
+        min-height: 400px; /* Garante altura mínima em dispositivos menores */
+    }
+
+    @media (min-width: 992px) { /* Para telas grandes (largura >= 992px) */
+        #calendar-container {
+            flex-wrap: nowrap; /* Impede que os itens quebrem a linha */
+        }
+        #events-column {
+            max-width: 25%; /* Ocupa 25% da largura */
+        }
+        #calendar-column {
+            max-width: 75%; /* Ocupa 75% da largura */
+        }
+    }
+
+    .fc-header-toolbar {
+        display: flex;
+        flex-wrap: wrap; /* Permite quebra de linha */
+        justify-content: space-between; /* Distribui espaço uniformemente */
+        gap: 10px; /* Espaçamento entre botões */
+    }
+
+    .fc-toolbar-chunk {
+        display: flex;
+        flex-wrap: wrap; /* Botões se ajustam em telas menores */
+        gap: 10px;
+        justify-content: flex-start; /* Mantém alinhamento à esquerda */
+    }
+
+    @media (max-width: 576px) { /* Ajustes para telas pequenas */
+        .fc-header-toolbar {
+            flex-direction: row; /* Mantém botões em linha horizontal */
+            justify-content: space-between; /* Botões alinhados como em telas médias */
+            align-items: center; /* Alinha verticalmente */
+        }
+
+        .fc-toolbar-chunk {
+            justify-content: flex-start; /* Alinha botões à esquerda, como em telas maiores */
+        }
+    }
+</style>
+
+
+<div class="container-fluid mt-4">
+    <div class="row" id="calendar-container">
+        <!-- Coluna de eventos do dia -->
+        <div class="col-md-3 mb-3" id="events-column">
+            <h5>Eventos do dia:</h5>
+            {% for event in events_today %}
+                <div class="card mb-2">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ event.title }}</h5>
+                        <p class="card-text"><strong>Turma:</strong> {{ event.turma }}</p>
+                        <p class="card-text"><strong>Descrição:</strong> {{ event.description }}</p>
+                        <a href="/task/{{ event.id }}" class="btn btn-primary btn-sm">Ver Detalhes</a>
+                    </div>
+                </div>
+            {% empty %}
+                <p class="text-muted">Não há eventos para hoje.</p>
+            {% endfor %}
+        </div>
+
+        <!-- Coluna do calendário -->
+        <div class="col-md-9" id="calendar-column">
+            <div id="calendar"></div>
+        </div>
+    </div>
+</div>
+
+<script src="{% static 'fullcalendar/dist/index.global.js' %}"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var calendarEl = document.getElementById('calendar');
+
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+            initialView: 'dayGridMonth',
+            locale: 'pt-br',
+            buttonText: {
+                today: 'Hoje',
+                month: 'Mês',
+                week: 'Semana',
+                day: 'Dia',
+                list: 'Agenda'
+            },
+            events: '/api/tasks/',  // URL da API para carregar todos os eventos
+            eventClick: function(info) {
+                var taskId = info.event.id;
+                window.location.href = '/task/' + taskId;
+            },
+            displayEventTime: true,
+            headerToolbar: {
+                left: 'prev,next today',
+                center: 'title',
+                right: 'dayGridMonth,timeGridWeek,timeGridDay'
+            },
+            height: "auto", // Garante ajuste de altura automática
+        });
+
+        calendar.render();
+    });
+</script>
+
+{% endblock %}

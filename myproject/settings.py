@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'crispy_bootstrap5',
     'cadastros.apps.CadastrosConfig',
     'usuarios.apps.UsuariosConfig',
+    'tasks',
 ]
 
 MIDDLEWARE = [

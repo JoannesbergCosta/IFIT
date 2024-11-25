@@ -1,0 +1,38 @@
+{% extends 'paginas/index.html' %}
+
+{% block title %}Lista de Tarefas{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6 list-div bg-light p-4 rounded shadow-sm position-relative">
+            <!-- Botão Voltar no canto superior esquerdo da div -->
+            <a href="javascript:history.back()" 
+               class="btn btn-secondary position-absolute top-0 start-0 mt-2 ms-2">
+                Voltar
+            </a>
+
+            <h1 class="display-6 text-center mb-3">{{ task.title }}</h1>
+            
+            <div class="mb-3">
+                <p class="fw-bold mb-1">Turma:</p>
+                <p class="text-muted mb-0">{{ task.turma.nome }}</p>
+            </div>
+            
+            <div class="mb-3">
+                <p class="fw-bold mb-1">Descrição:</p>
+                <p class="text-muted mb-0">{{ task.description }}</p>
+            </div>
+            
+            <div class="mb-3">
+                <p class="fw-bold mb-1">Criado por:</p>
+                <p class="text-muted mb-0">{{ task.usuario }} ({{ task.usuario.cargo }})</p>
+            </div>
+            
+            <div class="text-end">
+                <p class="fs-6 text-body-secondary mb-0">{{ task.date }}</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
