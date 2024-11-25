@@ -3,31 +3,35 @@
 {% load static %}
 
 {% block conteudo %}
-<h3>
-    Lista de Usuários Registrados 
-</h3>
+<div class="container my-5">
+    <h3 class="text-center text-primary mb-4">
+        Lista de Usuários Registrados 
+    </h3>
 
-
-<hr>
-<div class="table-responsive">
+    <hr>
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover text-center">
+            <thead class="table-primary">
+                <tr>
+                    <th>ID</th>
+                    <th>Nome</th>
+                    <th>Matrícula</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in object_list %}
+                <tr>
+                    <td>{{ user.pk }}</td>
+                    <td>{{ user.usuario }}</td>
+                    <td>{{ user.matricula }}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="3" class="text-muted">Nenhum usuário registrado.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 </div>
-<table class="table table-striped">
-    <tr>
-        <th>ID</th> <!--SO TESTE-->
-        <th>Nome</th>
-        <th>Matrícula</th>
-    </tr>
-
-    {% for user in object_list %}
-    <tr>
-        <td>{{ user.pk }}</td>
-        <td>{{ user.usuario }}</td>
-        <td>{{ user.matricula }}</td>
-    </tr>
-    {% empty %}
-    <tr>
-        <td colspan="4">Nenhum usuário registrado.</td>
-    </tr>
-    {% endfor %}
-</table>
 {% endblock %}
