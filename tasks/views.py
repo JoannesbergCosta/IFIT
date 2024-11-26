@@ -37,7 +37,7 @@ class TaskCreateView(GroupRequiredMixin, LoginRequiredMixin, CreateView):
     model = Task
     form_class = TaskForm
     template_name = 'tasks/addtask.html'
-    success_url = reverse_lazy('task-list')
+    success_url = reverse_lazy('calendar')
 
     def form_valid(self, form):
 

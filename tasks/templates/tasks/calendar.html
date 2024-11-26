@@ -81,6 +81,15 @@
         </div>
     </div>
 </div>
+<div class="row mb-3">
+    <!-- Botão de adicionar tarefa -->
+    <div class="col-12 col-sm-auto">
+        <a id="add-link" href="{% url 'new-task' %}" class="btn btn-primary d-flex align-items-center">
+            <i class="fas fa-plus me-2"></i> Adicionar evento
+        </a>
+    </div>
+</div>
+
 
 <script src="{% static 'fullcalendar/dist/index.global.js' %}"></script>
 <script>

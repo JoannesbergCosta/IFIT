@@ -46,3 +46,5 @@ class TaskForm(forms.ModelForm):
                 }
             ),
         )
+
+    

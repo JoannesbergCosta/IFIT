@@ -2,7 +2,7 @@
 
 {% block title %}Lista de Tarefas{% endblock %}
 
-{% block content %}
+{% block conteudo %}
 <div class="container-fluid">
     <h1 class="mb-3">Olá, {{ user.username }}</h1>
     <ol class="breadcrumb mb-3">
@@ -46,8 +46,6 @@
                 <div class="card-body">
                     <h4 class="card-title">{{ user.username }}</h4>
                     <h6 class="card-subtitle mb-3 text-body-secondary">Dados</h6>
-                    <h6 class="card-subtitle mb-3 text-body-secondary">Cargo: {{ user.cargo }}</h6>
-                    <h6 class="card-subtitle mb-3 text-body-secondary">Turma: {{ user.perfilturma }}</h6>
                     <h6 class="card-subtitle mb-3 text-body-secondary">Email: {{ user.email }}</h6>
                     <a href="{% url 'edituser' %}" class="btn btn-primary">Editar Dados</a>
                 </div>
@@ -81,7 +79,7 @@
                                     <th>Tarefa</th>
                                     <th>Data de Início</th>
                                     <th>Data de Término</th>
-                                    <th>Turma</th>
+                                    <th>Programa de treino</th>
                                     <th>Por</th>
                                 </tr>
                             </thead>
@@ -91,7 +89,7 @@
                                     <td><a href="/task/{{ task.id }}" class="text-decoration-none text-dark">{{ task.title }}</a></td>
                                     <td>{{ task.start_date }}</td>
                                     <td>{{ task.end_date }}</td>
-                                    <td>{{ task.turma.nome }}</td>
+                                    <td>{{ cadastros.training_exercicio }}</td>
                                     <td>{{ task.usuario.username }}</td>
                                 </tr>
                                 {% endfor %}

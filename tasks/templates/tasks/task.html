@@ -2,7 +2,7 @@
 
 {% block title %}Lista de Tarefas{% endblock %}
 
-{% block content %}
+{% block conteudo %}
 <div class="container mt-4">
     <div class="row justify-content-center">
         <div class="col-md-8 col-lg-6 list-div bg-light p-4 rounded shadow-sm position-relative">
@@ -28,7 +28,6 @@
                 <p class="fw-bold mb-1">Criado por:</p>
                 <p class="text-muted mb-0">{{ task.usuario }} ({{ task.usuario }})</p>
             </div>
-            
             <div class="text-end">
                 <p class="fs-6 text-body-secondary mb-0">{{ task.date }}</p>
             </div>

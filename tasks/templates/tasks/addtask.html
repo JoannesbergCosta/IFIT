@@ -4,7 +4,7 @@
 
 {% block title %}Adicione uma tarefa{% endblock %}
 
-{% block content %}
+{% block conteudo %}
 <div class="container mt-4">
     <div class="col-md-8 offset-md-2">
         <h5 class="text-primary text-center mb-4">Adicionar Novo Evento</h5>
@@ -21,7 +21,6 @@
                     </ul>
                 </div>
             {% endif %}
-            
             <div class="form-group">
                 <label for="title" class="font-weight-bold">Título:</label>
                 {{ form.title }}
@@ -35,7 +34,20 @@
                     </div>
                 {% endif %}
             </div>
-            
+    
+            <div class="form-group">
+                <label for="title" class="font-weight-bold">Título:</label>
+                {{ form.title }}
+                {% if form.title.errors %}
+                    <div class="text-danger">
+                        <ul>
+                            {% for error in form.title.errors %}
+                                <li>{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% endif %}
+            </div>
             <div class="form-group">
                 <label for="description" class="font-weight-bold">Descrição:</label>
                 {{ form.description }}
@@ -51,8 +63,8 @@
             </div>
             
             <div class="form-group">
-                <label for="turma" class="font-weight-bold">Turma:</label>
-                {{ form.turma }}
+                <label for="turma" class="font-weight-bold">Programa de Treino:</label>
+                {{ form.programa_treino }}
                 {% if form.turma.errors %}
                     <div class="text-danger">
                         <ul>

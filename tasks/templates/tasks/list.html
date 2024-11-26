@@ -2,9 +2,9 @@
 
 {% block title %}Lista de Eventos{% endblock %}
 
-{% block content %}
+{% block conteudo %}
 <div class="container-fluid">
-    <h1 class="mb-3">Lista de Eventos</h1>
+    <h1 class="mb-3">Lista de Eventos Treinos</h1>
     <ol class="breadcrumb mb-3">
         <li class="breadcrumb-item active">Eventos</li>
     </ol>
@@ -31,8 +31,8 @@
                             <th>Tarefa</th>
                             <th>Data de Início</th>
                             <th>Data de Término</th>
-                            <th>Turma</th>
-                            <th>Por:</th>
+                            <th>Program de treino</th>
+                            <th>Criado Por:</th>
                             <th>Ações</th>
                         </tr>
                     </thead>
@@ -44,7 +44,7 @@
                             </td>
                             <td style="color: #6c757d;" class="fs-6">{{ task.start_date }}</td>
                             <td style="color: #6c757d;" class="fs-6">{{ task.end_date }}</td>
-                            <td style="color: #6c757d;" class="fs-6">{{ task.turma.nome }}</td>
+                            <td style="color: #6c757d;" class="fs-6">{{ cadass.training_exercicio }}</td>
                             <td style="color: #6c757d;" class="fs-6">{{ task.usuario.username }}</td>
                             <td>
                                 <a href="{% url 'delete-task' task.id %}" class="text-danger me-2"><i class="fas fa-trash"></i></a>
