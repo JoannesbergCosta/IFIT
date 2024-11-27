@@ -1,13 +1,14 @@
 from django import forms
 from .models import Task
 from django.forms import DateInput
-
+from django.contrib.auth.models import User
+from cadastros.models import TrainingExercicio
 
 class TaskForm(forms.ModelForm):
     class Meta:
         model = Task
         fields = [
-            "usuario",
+            'usuario',  # Campo atualizado para permitir seleção de usuários.
             "title",
             "description",
             "programa_treino",
@@ -22,10 +23,7 @@ class TaskForm(forms.ModelForm):
                 attrs={"class": "form-control", "placeholder": "Insira o título do evento"}
             ),
             "description": forms.Textarea(
-                attrs={
-                    "class": "form-control",
-                    "placeholder": "Insira a descrição do evento",
-                }
+                attrs={ "class": "form-control", "placeholder": "Insira a descrição do evento" }
             ),
             "start_date": DateInput(attrs={"class": "form-control", "type": "date"}),
             "end_date": DateInput(attrs={"class": "form-control", "type": "date"}),
@@ -34,18 +32,20 @@ class TaskForm(forms.ModelForm):
         }
 
     def __init__(self, *args, **kwargs):
-        from cadastros.models import TrainingExercicio  # Importação dinâmica
         super().__init__(*args, **kwargs)
+        self.fields["usuario"] = forms.ModelChoiceField(
+            queryset=User.objects.all(),
+            required=True,
+            label="Destinatário do Evento",
+            widget=forms.Select(
+                attrs={ "class": "form-select", "aria-label": "Selecionar usuário" }
+            ),
+        )
         self.fields["programa_treino"] = forms.ModelChoiceField(
             queryset=TrainingExercicio.objects.all(),
             required=True,
             label="Programa de Treinamento",
             widget=forms.Select(
-                attrs={
-                    "class": "form-select",
-                    "aria-label": "Selecionar programa de treino",
-                }
+                attrs={ "class": "form-select", "aria-label": "Selecionar programa de treino" }
             ),
         )
-
-    
