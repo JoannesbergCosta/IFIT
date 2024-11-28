@@ -8,7 +8,7 @@ class TaskForm(forms.ModelForm):
     class Meta:
         model = Task
         fields = [
-            'usuario',  # Campo atualizado para permitir seleção de usuários.
+            'usuario', 
             "title",
             "description",
             "programa_treino",

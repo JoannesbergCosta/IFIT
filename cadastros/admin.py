@@ -1,6 +1,6 @@
 from django.contrib import admin
 from .models import Campo, Exercicio, TrainingExercicio, Avaliacao
-# Register your models here.
+
 admin.site.register(Campo)
 admin.site.register(Exercicio)
 admin.site.register(TrainingExercicio)

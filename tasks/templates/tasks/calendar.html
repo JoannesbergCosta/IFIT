@@ -80,13 +80,16 @@
         
     </div>
 </div>
+{% if request.user.is_staff %}
 <div class="row mb-3">
     <div class="col-12 col-sm-auto">
         <a id="add-link" href="{% url 'new-task' %}" class="btn btn-primary d-flex align-items-center">
-            <i class="fas fa-plus me-2"></i>  Adicionar evento
+            <i class="fas fa-plus me-2"></i> Adicionar evento
         </a>
     </div>
 </div>
+{% endif %}
+
 <script src="{% static 'fullcalendar/dist/index.global.js' %}"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function() {

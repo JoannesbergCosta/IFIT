@@ -10,7 +10,6 @@ class UsuarioForm(UserCreationForm):
         model = User
         fields = ['username', 'email', 'password1', 'password2']
 
-    # O método clean_email verifica se o email já está em uso.
     def clean_email(self):
         e = self.cleaned_data.get('email')
         if User.objects.filter(email=e).exists():

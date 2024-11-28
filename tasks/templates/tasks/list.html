@@ -9,7 +9,6 @@
         <li class="breadcrumb-item active">Eventos</li>
     </ol>
     <div class="row mb-3">
-        <!-- Botão de adicionar tarefa -->
         <div class="col-12 col-sm-auto">
             <a id="add-link" href="{% url 'new-task' %}" class="btn btn-primary d-flex align-items-center">
                 <i class="fas fa-plus me-2"></i> Adicionar evento
@@ -23,7 +22,6 @@
             Eventos
         </div>
         <div class="card-body">
-            <!-- Tabela responsiva -->
             <div class="table-responsive">
                 <table id="datatablesSimple" class="table table-striped table-hover">
                     <thead class="table">
@@ -54,7 +52,6 @@
                         {% endfor %}
                     </tbody>
                 </table>
-                <!-- Paginação Responsiva -->
                 <div class="d-flex justify-content-center mt-4">
                     <nav aria-label="Paginação">
                         <ul class="pagination">
@@ -89,10 +86,7 @@
 {% endblock %}
 
 {% block scripts %}
-<!-- Inclua o CSS do DataTables -->
 <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
-
-<!-- Inclua o jQuery e o DataTables JS -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
 
@@ -100,10 +94,9 @@
     window.addEventListener('DOMContentLoaded', event => {
         const datatablesSimple = document.getElementById('datatablesSimple');
         if (datatablesSimple) {
-            // Inicialize a tabela com paginação
             const dataTable = new simpleDatatables.DataTable(datatablesSimple, {
-                perPage: 5,  // Número de registros por página
-                perPageSelect: [5, 10, 15, 20],  // Opções de paginação
+                perPage: 5,
+                perPageSelect: [5, 10, 15, 20],  
             });
         }
     });

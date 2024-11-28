@@ -16,7 +16,7 @@
 <div class="container mt-5">
     <h3 class="text-center mb-4">Programas de Treino</h3>
 
-    <!-- Botão superior para cadastrar -->
+
     <div class="text-center mb-4">
         {% if user.is_staff %}
             <a href="{% url 'cadastrar-training-exercicio' %}" class="btn btn-success btn-lg shadow-sm">Cadastrar um novo Programa de Treino</a>
@@ -31,6 +31,7 @@
                 <div class="card-body">
                     <h5 class="card-title text-secondary">Treino: <strong>{{ training_exercicio.nome_programa }}</strong></h5>
                     <p><strong>Exercicio: </strong>{{ training_exercicio.exercicio.nome }}</p>
+                    <p><strong>Usuario: </strong>{{ training_exercicio.usuario.username }}</p>
                     <p><strong>Grupo: </strong>{{ training_exercicio.grupo }}</p>
                     <p><strong>Séries: </strong>{{ training_exercicio.series }} séries</p>
                     <p><strong>Repetições: </strong>{{ training_exercicio.repeticoes }} reps</p>
@@ -38,7 +39,7 @@
                     <p><strong>Tempo de Descanso: </strong>{{ training_exercicio.tempo }} minutos</p>
                 </div>
                 
-                <!-- Tabela estilizada -->
+    
                 <div class="text-center mt-3">
                     {% if user.is_staff %}
                         <a href="{% url 'editar-training-exercicio' training_exercicio.pk %}" class="btn btn-warning btn-sm" title="Editar">
@@ -58,14 +59,11 @@
         </div>
         {% endfor %}
     </div>
-
-    <!-- Botão inferior para adicionar exercício -->
     <div class="text-center mt-4">
         {% if user.is_staff %}
             <a href="{% url 'cadastrar-exercicio' %}" class="btn btn-outline-primary btn-lg shadow-sm" style="border-width: 2px;">+ Adicionar Exercício</a>
         {% endif %}
     </div>
-    <!-- Paginação Responsiva -->
     <div class="d-flex justify-content-center mt-4">
         <nav aria-label="Paginação">
             <ul class="pagination">

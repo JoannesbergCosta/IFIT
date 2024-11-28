@@ -10,8 +10,6 @@
         <h5 class="text-primary text-center mb-4">Adicionar Novo Evento</h5>
         <form method="post">
             {% csrf_token %}
-            
-            <!-- Exibe erros gerais (não relacionados a campos específicos) -->
             {% if form.non_field_errors %}
                 <div class="alert alert-danger">
                     <ul>

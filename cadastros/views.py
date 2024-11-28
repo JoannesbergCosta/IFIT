@@ -62,12 +62,10 @@ class TrainingExercicioCreate(CreateView):
     success_url = '/listar/training-exercicios/'
 
     def form_valid(self, form):
-        # Salva os dados do formulário, incluindo o Exercicio associado
         response = super().form_valid(form)
         return response
 
     def form_invalid(self, form):
-        # Caso o formulário seja inválido, a resposta ainda será retornada
         return self.render_to_response(self.get_context_data(form=form))
 
     def get_context_data(self, **kwargs):
@@ -133,13 +131,11 @@ class TrainingExercicioUpdate(GroupRequiredMixin, LoginRequiredMixin, UpdateView
     success_url = reverse_lazy('listar-training-exercicios')
 
     def dispatch(self, request, *args, **kwargs):
-        # Garantir que apenas administradores possam acessar
         if not request.user.is_staff:
             return HttpResponseForbidden("Você não tem permissão para editar este registro.")
         return super().dispatch(request, *args, **kwargs)
 
     def get_object(self, queryset=None):
-        # Use o 'get_object_or_404' para uma melhor gestão de exceções
         return get_object_or_404(TrainingExercicio, pk=self.kwargs['pk'])
 
 
@@ -174,13 +170,11 @@ class TrainingExercicioDelete(GroupRequiredMixin, LoginRequiredMixin, DeleteView
     success_url = reverse_lazy('listar-training-exercicios')
 
     def dispatch(self, request, *args, **kwargs):
-        # Verifica se o usuário tem permissão de administrador
         if not request.user.is_staff:
-            return redirect('listar-training-exercicios')  # Redireciona para lista
+            return redirect('listar-training-exercicios')
         return super().dispatch(request, *args, **kwargs)
 
     def get_object(self, queryset=None):
-        # Use get_object_or_404 para evitar erros de chave primária inexistente
         return get_object_or_404(TrainingExercicio, pk=self.kwargs['pk'])
 
     
@@ -204,9 +198,9 @@ class TrainingExercicioList(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         if self.request.user.is_staff:
-            return TrainingExercicio.objects.all()  # Administradores veem todos
+            return TrainingExercicio.objects.all() 
         else:
-            return TrainingExercicio.objects.filter(usuario=self.request.user)  # Usuários comuns veem seus próprios registros
+            return TrainingExercicio.objects.filter(usuario=self.request.user) 
 
 
 class AvaliacaoList(LoginRequiredMixin, ListView):
@@ -217,9 +211,9 @@ class AvaliacaoList(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         if self.request.user.is_staff:
-            return Avaliacao.objects.all()  # Administradores veem todas as avaliações
+            return Avaliacao.objects.all()  
         else:
-            return Avaliacao.objects.filter(usuario=self.request.user)  # Usuários comuns veem suas próprias avaliações
+            return Avaliacao.objects.filter(usuario=self.request.user)  
 
 
 

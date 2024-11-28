@@ -6,7 +6,6 @@ from django.contrib.auth.models import User
 
 
 def get_default_exercicio():
-    # Retorna o primeiro objeto Exercicio, se existir
     return Exercicio.objects.first()
 
 class Campo(models.Model):
@@ -25,11 +24,13 @@ class Exercicio(models.Model):
 class TrainingExercicio(models.Model):
     exercicio = models.ForeignKey(Exercicio, related_name='treinamentos', on_delete=models.CASCADE, default=get_default_exercicio)
     nome_programa = models.CharField(max_length=100)
-    grupo = models.CharField(max_length=50, default='Desconhecido')  # Exemplo de campo para o grupo
+    grupo = models.CharField(max_length=50, default='Desconhecido') 
     series = models.PositiveIntegerField(default=10)
     repeticoes = models.PositiveIntegerField(default=10)
     carga = models.IntegerField(default=0, verbose_name="Carga (kg)")
-    tempo = models.IntegerField(default=0, verbose_name="Minutos (mn)")  # Tempo de descanso em segundos, por exemplo
+    tempo = models.IntegerField(default=0, verbose_name="Minutos (mn)")  
+    usuario = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
+
 
     def __str__(self):
         return f'{self.nome_programa} - {self.grupo}'

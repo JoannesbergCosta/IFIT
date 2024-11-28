@@ -35,8 +35,6 @@
                 {% endfor %}
             </tbody>
         </table>
-
-        <!-- Paginação Responsiva -->
         <div class="d-flex justify-content-center mt-4">
             <nav aria-label="Paginação">
                 <ul class="pagination">
@@ -68,41 +66,34 @@
 </div>
 
 <style>
-    /* Estilo para a tabela e bordas */
     table {
         border-radius: 10px;
         border-collapse: separate;
         border-spacing: 0 10px;
     }
 
-    /* Linhas da tabela */
     .table td, .table th {
         vertical-align: middle;
     }
 
-    /* Linha de cabeçalho mais escura */
     .table-dark {
         background-color: #333;
         color: white;
     }
 
-    /* Estilo das células e bordas */
     .table td, .table th {
         padding: 15px;
     }
 
-    /* Cores das linhas alternadas */
     .user-row:nth-child(odd) {
         background-color: #f7f7f7;
     }
 
-    /* Efeito de hover nas linhas */
     .user-row:hover {
         background-color: #e0e0e0;
         cursor: pointer;
     }
 
-    /* Estilo da paginação */
     .pagination {
         font-size: 1.1rem;
     }

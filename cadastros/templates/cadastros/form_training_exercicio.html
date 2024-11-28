@@ -9,7 +9,7 @@
 
     <form method="post">
         {% csrf_token %}
-        {{ form|crispy }}  <!-- Usando crispy_forms para formatar o formulário -->
+        {{ form|crispy }}  
         
         <div class="text-center mt-4">
             <button type="submit" class="btn btn-success btn-lg">Salvar</button>
