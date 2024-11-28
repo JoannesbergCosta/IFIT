@@ -63,7 +63,7 @@
             {% for event in events_today %}
                 <div class="card mb-2">
                     <div class="card-body">
-                        <p class="card-text"><strong>Usuário:</strong> {{ event.usuario.username }}</p>
+                        <p class="card-text"><strong>Evento de:</strong> {{ event.usuario.username }}</p>
                         <h5 class="card-title">{{ event.title }}</h5>
                         <p class="card-text"><strong>Descrição:</strong> {{ event.description }}</p>
                         <a href="/task/{{ event.id }}" class="btn btn-primary btn-sm">Ver Detalhes</a>
@@ -73,22 +73,20 @@
                 <p class="text-muted">Não há eventos para hoje.</p>
             {% endfor %}
         </div>
-
         <!-- Coluna do calendário -->
         <div class="col-md-9" id="calendar-column">
             <div id="calendar"></div>
         </div>
+        
     </div>
 </div>
-
 <div class="row mb-3">
     <div class="col-12 col-sm-auto">
         <a id="add-link" href="{% url 'new-task' %}" class="btn btn-primary d-flex align-items-center">
-            <i class="fas fa-plus me-2"></i> Adicionar evento
+            <i class="fas fa-plus me-2"></i>  Adicionar evento
         </a>
     </div>
 </div>
-
 <script src="{% static 'fullcalendar/dist/index.global.js' %}"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function() {

@@ -21,6 +21,7 @@ class TaskListView(GroupRequiredMixin, LoginRequiredMixin, ListView):
     template_name = 'tasks/list.html'
     context_object_name = 'tasks'
     ordering = '-created_at'
+    paginate_by = 3
 
     def get_queryset(self):
         # Se o usuário for admin (is_staff), ele verá todas as tarefas.

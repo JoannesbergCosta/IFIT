@@ -16,6 +16,7 @@
                     <th>ID</th>
                     <th>Nome</th>
                     <th>Matrícula</th>
+                    <th>Email Acadêmico</th>
                 </tr>
             </thead>
             <tbody>
@@ -24,6 +25,7 @@
                     <td>{{ user.pk }}</td>
                     <td>{{ user.usuario }}</td>
                     <td>{{ user.matricula }}</td>
+                    <td>{{ user.email }}</td>
                 </tr>
                 {% empty %}
                 <tr>
@@ -32,6 +34,34 @@
                 {% endfor %}
             </tbody>
         </table>
+            <!-- Paginação Responsiva -->
+        <div class="d-flex justify-content-center mt-4">
+            <nav aria-label="Paginação">
+                <ul class="pagination">
+                    {% if page_obj.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page=1">Primeira</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Anterior</a>
+                    </li>
+                    {% endif %}
+
+                    <li class="page-item disabled">
+                        <span class="page-link">Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}</span>
+                    </li>
+
+                    {% if page_obj.has_next %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.next_page_number }}">Próxima</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">Última</a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </div>
     </div>
 </div>
 {% endblock %}

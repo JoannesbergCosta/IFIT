@@ -11,19 +11,18 @@
         <a href="{% url 'cadastrar-avaliacao' %}" class="btn btn-primary btn-sm">Adicionar Avaliação Física</a>
         {% endif %}
     </div>
-    
 
     <div class="row">
         {% for avaliacao in object_list %}
-        <div class="col-md-12 mb-4">
+        <div class="col-12 mb-4">
             <div class="card shadow-lg">
-                <div class="card-header bg-primary text-white">
-                    <h5 class="m-0 text-center">Avaliação #{{ avaliacao.pk }}</h5>
+                <div class="card-header bg-primary text-white text-center">
+                    <h5 class="m-0">Avaliação #{{ avaliacao.pk }}</h5>
                 </div>
                 <div class="card-body">
                     <div class="row">
                         <!-- Coluna 1: Dados Básicos -->
-                        <div class="col-md-4 mb-3">
+                        <div class="col-md-4 col-12 mb-3">
                             <ul class="list-unstyled">
                                 <li><strong>Usuário:</strong> {{ avaliacao.usuario }}</li>
                                 <li><strong>Data:</strong> {{ avaliacao.data }}</li>
@@ -35,7 +34,7 @@
                         </div>
 
                         <!-- Coluna 2: Medidas Corporais -->
-                        <div class="col-md-8">
+                        <div class="col-md-8 col-12">
                             <h6 class="mb-4">Medidas Corporais</h6>
                             <div class="row">
                                 <div class="col-6">
@@ -94,5 +93,35 @@
         </div>
         {% endfor %}
     </div>
+
+    <!-- Paginação Responsiva -->
+    <div class="d-flex justify-content-center mt-4">
+        <nav aria-label="Paginação">
+            <ul class="pagination">
+                {% if page_obj.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="?page=1">Primeira</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Anterior</a>
+                </li>
+                {% endif %}
+
+                <li class="page-item disabled">
+                    <span class="page-link">Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}</span>
+                </li>
+
+                {% if page_obj.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.next_page_number }}">Próxima</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">Última</a>
+                </li>
+                {% endif %}
+            </ul>
+        </nav>
+    </div>
 </div>
 {% endblock %}
+

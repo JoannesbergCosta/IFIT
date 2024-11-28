@@ -37,6 +37,7 @@ class PerfilList(ListView):
     login_url = reverse_lazy('login')  
     model = Perfil
     template_name = 'cadastros/listas/userauth.html'
+    paginate_by = 3
 
     def get_queryset(self):
         if self.request.user.is_staff:

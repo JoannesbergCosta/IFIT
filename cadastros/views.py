@@ -25,6 +25,14 @@ class ExercicioCreate(GroupRequiredMixin, LoginRequiredMixin, CreateView):
     template_name = 'cadastros/form.html'
     success_url = reverse_lazy('listar-exercicios')
 
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+
+        context['titulo'] = "Cadastrar Exercício"
+        context['botao'] = "Salvar"
+
+        return context
+
 class AvaliacaoCreate(GroupRequiredMixin, LoginRequiredMixin, CreateView):
     login_url = reverse_lazy('login')
     group_required = u"Administrador"
@@ -94,7 +102,8 @@ class ExercicioUpdate(GroupRequiredMixin, LoginRequiredMixin, UpdateView):
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
 
-        context['titulo'] = "Editar Cadastro de Avaliação"
+        context['titulo'] = "Editar Exercício"
+        context['botao'] = "Salvar"
 
         return context
 
@@ -189,6 +198,7 @@ class TrainingExercicioList(LoginRequiredMixin, ListView):
     login_url = reverse_lazy('login')
     model = TrainingExercicio
     template_name = 'cadastros/listas/training_exercicio.html'
+    paginate_by = 3
 
     def get_queryset(self):
         if self.request.user.is_staff:  
@@ -200,6 +210,7 @@ class AvaliacaoList(LoginRequiredMixin, ListView):
     login_url = reverse_lazy('login')
     model = Avaliacao
     template_name = 'cadastros/listas/avaliacao.html'
+    paginate_by = 1
 
     def get_queryset(self):
         if self.request.user.is_staff:  
