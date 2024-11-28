@@ -21,6 +21,47 @@
     <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
     <link href="{% static 'css/sb-admin-2.min.css' %}" rel="stylesheet">
     <link href="{% static 'css/style.css' %}" rel="stylesheet">  <!-- Arquivo de estilo adicional -->
+
+    <style>
+        body {
+            background: linear-gradient(135deg, #00c6ff 0%, #0072ff 100%);
+            color: #fff;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        .card {
+            background-color: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+        }
+
+        .text-gray-900 {
+            color: #343a40 !important;
+        }
+
+        .btn-primary {
+            background-color: #102133;
+            border-color: #007bff;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+            border-color: #0056b3;
+        }
+
+        .form-group label {
+            color: #495057;
+            font-weight: 600;
+        }
+
+        a.small {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        a.small:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
 
 {% if request.user.is_authenticated %}
