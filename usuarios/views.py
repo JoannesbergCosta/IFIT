@@ -10,13 +10,13 @@ from django.contrib.auth import logout
 
 
 class UsuarioCreate(CreateView):
-    template_name = "cadastros/form.html"
+    template_name = "cadastros/form_add_user.html"
     form_class = UsuarioForm
-    success_url = reverse_lazy('login')
+    success_url = reverse_lazy('inicio')
 
     def form_valid(self, form):
         
-        grupo, _ = Group.objects.get_or_create(name="Docente")
+        grupo, _ = Group.objects.get_or_create(name="Docente") #ou Discentes
 
         url = super().form_valid(form)
 
@@ -52,7 +52,7 @@ class PerfilList(ListView):
 
 
 class PerfilUpdate(UpdateView):
-    template_name = "cadastros/form.html"
+    template_name = "cadastros/form_perfil.html"
     model = Perfil
     fields = ['nome_completo', 'email', 'matricula']
     success_url = reverse_lazy("inicio")

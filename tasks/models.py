@@ -16,7 +16,7 @@ class Task(models.Model):
     end_time = models.TimeField()
 
     usuario = models.ForeignKey(User, on_delete=models.CASCADE)
-    programa_treino = models.ForeignKey(TrainingExercicio, on_delete=models.PROTECT)
+    programa_treino = models.ForeignKey(TrainingExercicio, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

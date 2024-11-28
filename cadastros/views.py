@@ -3,7 +3,7 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic.list import ListView
 from .models import Campo, Exercicio, TrainingExercicio, Avaliacao
 from django.urls import reverse_lazy
-from .forms import TrainingExercicioForm
+from .forms import TrainingExercicioForm, ExercicioForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from braces.views import GroupRequiredMixin
 from django.http import HttpResponseForbidden
@@ -14,25 +14,26 @@ class CampoCreate(LoginRequiredMixin, CreateView):
     login_url = reverse_lazy('login')
     model = Campo
     fields = ['nome']
+    form_class = ExercicioForm
     template_name = 'cadastros/form.html'
     success_url = reverse_lazy('listar-campos')
 
 class ExercicioCreate(GroupRequiredMixin, LoginRequiredMixin, CreateView):
-    login_url = reverse_lazy('login')
-    group_required = u"Administrador"
-    model = Exercicio
-    fields = ['exercicio', 'tipo', 'grupo', 'descricao']
-    template_name = 'cadastros/form.html'
-    success_url = reverse_lazy('listar-exercicios')
+    login_url = reverse_lazy('login')  # Redireciona para a página de login se não autenticado
+    group_required = u"Administrador"  # Restringe o acesso ao grupo "Administrador"
+    model = Exercicio  # Modelo para o qual o formulário será gerado
+    template_name = 'cadastros/form.html'  # Caminho para o template do formulário
+    success_url = reverse_lazy('listar-exercicios')  # URL para redirecionamento após sucesso
+
+    # Especificando os campos que aparecerão no formulário
+    fields = ['nome', 'tipo', 'grupo', 'series', 'repeticoes', 'carga', 'tempo']
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
-
-        context['titulo'] = "Cadastrar Exercício"
-        context['botao'] = "Salvar"
-
+        context['titulo'] = "Cadastrar Exercício"  # Título para exibir no template
+        context['botao'] = "Salvar"  # Texto do botão de submissão
         return context
-
+    
 class AvaliacaoCreate(GroupRequiredMixin, LoginRequiredMixin, CreateView):
     login_url = reverse_lazy('login')
     group_required = u"Administrador"
@@ -54,32 +55,27 @@ class AvaliacaoCreate(GroupRequiredMixin, LoginRequiredMixin, CreateView):
         return context
 
 
-class TrainingExercicioCreate(GroupRequiredMixin, LoginRequiredMixin, CreateView):
-    login_url = reverse_lazy('login')
-    group_required = u"Administrador"
+class TrainingExercicioCreate(CreateView):
     model = TrainingExercicio
     form_class = TrainingExercicioForm
-    template_name = 'cadastros/form_training_exercicio.html'
-    success_url = reverse_lazy('listar-training-exercicios')
+    template_name = 'cadastros/form.html'
+    success_url = '/listar/training-exercicios/'
 
     def form_valid(self, form):
-        form.instance.usuario = self.request.user
-        
-        url = super().form_valid(form)
+        # Salva os dados do formulário, incluindo o Exercicio associado
+        response = super().form_valid(form)
+        return response
 
-        
-        exercises = form.cleaned_data['exercises']
-        for i, exercise in enumerate(exercises):
-            
-            series = form.cleaned_data.get(f'series_{i}')
-            repeticoes = form.cleaned_data.get(f'repeticoes_{i}')
-            carga = form.cleaned_data.get(f'carga_{i}')
-            descanso = form.cleaned_data.get(f'descanso_{i}')
-            
-            
-            form.instance.exercises.add(exercise)
+    def form_invalid(self, form):
+        # Caso o formulário seja inválido, a resposta ainda será retornada
+        return self.render_to_response(self.get_context_data(form=form))
 
-        return url
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['titulo'] = 'Cadastrar Treinamento'
+        context['botao'] = 'Salvar'
+        return context
+
 
 
 # Update Views
@@ -137,12 +133,15 @@ class TrainingExercicioUpdate(GroupRequiredMixin, LoginRequiredMixin, UpdateView
     success_url = reverse_lazy('listar-training-exercicios')
 
     def dispatch(self, request, *args, **kwargs):
+        # Garantir que apenas administradores possam acessar
         if not request.user.is_staff:
             return HttpResponseForbidden("Você não tem permissão para editar este registro.")
         return super().dispatch(request, *args, **kwargs)
 
     def get_object(self, queryset=None):
-        return TrainingExercicio.objects.get(pk=self.kwargs['pk'])
+        # Use o 'get_object_or_404' para uma melhor gestão de exceções
+        return get_object_or_404(TrainingExercicio, pk=self.kwargs['pk'])
+
 
 
 # Delete Views
@@ -175,13 +174,15 @@ class TrainingExercicioDelete(GroupRequiredMixin, LoginRequiredMixin, DeleteView
     success_url = reverse_lazy('listar-training-exercicios')
 
     def dispatch(self, request, *args, **kwargs):
+        # Verifica se o usuário tem permissão de administrador
         if not request.user.is_staff:
-            return redirect('listar-training-exercicios')
+            return redirect('listar-training-exercicios')  # Redireciona para lista
         return super().dispatch(request, *args, **kwargs)
 
     def get_object(self, queryset=None):
-        self.object = get_object_or_404(TrainingExercicio, pk=self.kwargs['pk'])
-        return self.object
+        # Use get_object_or_404 para evitar erros de chave primária inexistente
+        return get_object_or_404(TrainingExercicio, pk=self.kwargs['pk'])
+
     
 # List Views
 class CampoList(LoginRequiredMixin, ListView):
@@ -199,13 +200,15 @@ class TrainingExercicioList(LoginRequiredMixin, ListView):
     model = TrainingExercicio
     template_name = 'cadastros/listas/training_exercicio.html'
     paginate_by = 3
+    context_object_name = 'programas'
 
     def get_queryset(self):
-        if self.request.user.is_staff:  
-            return TrainingExercicio.objects.all()
+        if self.request.user.is_staff:
+            return TrainingExercicio.objects.all()  # Administradores veem todos
         else:
-            return TrainingExercicio.objects.filter(usuario=self.request.user)
-        
+            return TrainingExercicio.objects.filter(usuario=self.request.user)  # Usuários comuns veem seus próprios registros
+
+
 class AvaliacaoList(LoginRequiredMixin, ListView):
     login_url = reverse_lazy('login')
     model = Avaliacao
@@ -213,9 +216,10 @@ class AvaliacaoList(LoginRequiredMixin, ListView):
     paginate_by = 1
 
     def get_queryset(self):
-        if self.request.user.is_staff:  
-            return Avaliacao.objects.all()
+        if self.request.user.is_staff:
+            return Avaliacao.objects.all()  # Administradores veem todas as avaliações
         else:
-            return Avaliacao.objects.filter(usuario=self.request.user)
+            return Avaliacao.objects.filter(usuario=self.request.user)  # Usuários comuns veem suas próprias avaliações
+
 
 

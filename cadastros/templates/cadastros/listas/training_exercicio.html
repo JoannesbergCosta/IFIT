@@ -29,42 +29,16 @@
         <div class="col-md-4 mb-4">
             <div class="card border-light shadow-sm" style="border-radius: 15px; background-color: #f8f9fa;">
                 <div class="card-body">
-                    <h5 class="card-title text-secondary">User: <strong>{{ training_exercicio.usuario }}</strong></h5>
+                    <h5 class="card-title text-secondary">Treino: <strong>{{ training_exercicio.nome_programa }}</strong></h5>
+                    <p><strong>Exercicio: </strong>{{ training_exercicio.exercicio.nome }}</p>
+                    <p><strong>Grupo: </strong>{{ training_exercicio.grupo }}</p>
+                    <p><strong>Séries: </strong>{{ training_exercicio.series }} séries</p>
+                    <p><strong>Repetições: </strong>{{ training_exercicio.repeticoes }} reps</p>
+                    <p><strong>Carga: </strong>{{ training_exercicio.carga }} kg</p>
+                    <p><strong>Tempo de Descanso: </strong>{{ training_exercicio.tempo }} minutos</p>
                 </div>
                 
                 <!-- Tabela estilizada -->
-                <div class="table-responsive">
-                    <table class="table table-borderless">
-                        <tbody>
-                            <tr>
-                                <td><strong>Exercícios:</strong></td>
-                                <td>
-                                    <div class="d-flex flex-wrap" style="gap: 0.5rem;">
-                                        {% for exercicio in training_exercicio.exercises.all %}
-                                            <span class="badge bg-info text-dark">{{ exercicio.exercicio }}</span>
-                                        {% endfor %}
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><strong>Séries:</strong></td>
-                                <td><span class="text-primary">{{ training_exercicio.series }}</span> séries</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Repetições:</strong></td>
-                                <td><span class="text-primary">{{ training_exercicio.repeticoes }}</span> reps</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Carga:</strong></td>
-                                <td><span class="text-primary">{{ training_exercicio.carga }}</span> kg</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Descanso:</strong></td>
-                                <td><span class="text-primary">{{ training_exercicio.descanso }}</span> seg</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
                 <div class="text-center mt-3">
                     {% if user.is_staff %}
                         <a href="{% url 'editar-training-exercicio' training_exercicio.pk %}" class="btn btn-warning btn-sm" title="Editar">

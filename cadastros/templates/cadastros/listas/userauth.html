@@ -5,13 +5,14 @@
 {% block conteudo %}
 <div class="container my-5">
     <h3 class="text-center text-primary mb-4">
-        Lista de Usuários Registrados 
+        Lista de Usuários Registrados
     </h3>
 
     <hr>
+
     <div class="table-responsive">
         <table class="table table-bordered table-hover text-center">
-            <thead class="table-primary">
+            <thead class="table-dark">
                 <tr>
                     <th>ID</th>
                     <th>Nome</th>
@@ -21,7 +22,7 @@
             </thead>
             <tbody>
                 {% for user in object_list %}
-                <tr>
+                <tr class="user-row">
                     <td>{{ user.pk }}</td>
                     <td>{{ user.usuario }}</td>
                     <td>{{ user.matricula }}</td>
@@ -29,12 +30,13 @@
                 </tr>
                 {% empty %}
                 <tr>
-                    <td colspan="3" class="text-muted">Nenhum usuário registrado.</td>
+                    <td colspan="4" class="text-muted">Nenhum usuário registrado.</td>
                 </tr>
                 {% endfor %}
             </tbody>
         </table>
-            <!-- Paginação Responsiva -->
+
+        <!-- Paginação Responsiva -->
         <div class="d-flex justify-content-center mt-4">
             <nav aria-label="Paginação">
                 <ul class="pagination">
@@ -64,4 +66,61 @@
         </div>
     </div>
 </div>
+
+<style>
+    /* Estilo para a tabela e bordas */
+    table {
+        border-radius: 10px;
+        border-collapse: separate;
+        border-spacing: 0 10px;
+    }
+
+    /* Linhas da tabela */
+    .table td, .table th {
+        vertical-align: middle;
+    }
+
+    /* Linha de cabeçalho mais escura */
+    .table-dark {
+        background-color: #333;
+        color: white;
+    }
+
+    /* Estilo das células e bordas */
+    .table td, .table th {
+        padding: 15px;
+    }
+
+    /* Cores das linhas alternadas */
+    .user-row:nth-child(odd) {
+        background-color: #f7f7f7;
+    }
+
+    /* Efeito de hover nas linhas */
+    .user-row:hover {
+        background-color: #e0e0e0;
+        cursor: pointer;
+    }
+
+    /* Estilo da paginação */
+    .pagination {
+        font-size: 1.1rem;
+    }
+
+    .pagination .page-item .page-link {
+        color: #4e73df;
+        border: 1px solid #4e73df;
+    }
+
+    .pagination .page-item.active .page-link {
+        background-color: #4e73df;
+        border-color: #4e73df;
+    }
+
+    .pagination .page-item.disabled .page-link {
+        color: #d1d3e2;
+        background-color: #f8f9fc;
+        border-color: #d1d3e2;
+    }
+</style>
 {% endblock %}

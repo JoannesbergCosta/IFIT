@@ -1,0 +1,21 @@
+{% extends 'paginas/index.html' %}
+{% load crispy_forms_tags %}
+
+{% block conteudo %}
+<div class="container mt-5">
+  <div class="card shadow-lg border-0 rounded-lg">
+    <div class="card-header bg-primary text-white">
+      <h4 class="mb-0 text-center">{{ titulo }}</h4>
+    </div>
+    <div class="card-body">
+      <form method="POST">
+        {% csrf_token %}
+        {{ form|crispy }}
+        <div class="text-center mt-4">
+          <button type="submit" class="btn btn-success btn-block">{{ botao }}</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

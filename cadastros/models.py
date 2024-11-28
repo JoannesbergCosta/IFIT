@@ -1,6 +1,13 @@
 from django.db import models
+from datetime import timedelta
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.contrib.auth.models import User
+
+
+
+def get_default_exercicio():
+    # Retorna o primeiro objeto Exercicio, se existir
+    return Exercicio.objects.first()
 
 class Campo(models.Model):
     nome = models.CharField(max_length=50)
@@ -8,30 +15,26 @@ class Campo(models.Model):
     def __str__(self):
         return f"[Campo: {self.nome}]"
 
-
 class Exercicio(models.Model):
-    exercicio = models.CharField(max_length=50)
-    tipo = models.CharField(max_length=10)
-    grupo = models.CharField(max_length=20)
-    descricao = models.CharField(max_length=100)
+    nome = models.CharField(max_length=100, default='Default Name')
+    tipo = models.CharField(max_length=50, choices=[('Força', 'Força'), ('Cardio', 'Cardio'), ('Flexibilidade', 'Flexibilidade')], default='Força')
 
     def __str__(self):
-        return self.exercicio
-    
+        return self.nome
+
 class TrainingExercicio(models.Model):
-    exercises = models.ManyToManyField(Exercicio)
-    series = models.IntegerField()
-    repeticoes = models.IntegerField()
-    carga = models.CharField(max_length=50, blank=True, null=True)
-    descanso = models.IntegerField()  # em segundos
-    descricao = models.CharField(max_length=100, default='Descrição padrão')
-    usuario = models.ForeignKey(User, on_delete=models.CASCADE)
+    exercicio = models.ForeignKey(Exercicio, related_name='treinamentos', on_delete=models.CASCADE, default=get_default_exercicio)
+    nome_programa = models.CharField(max_length=100)
+    grupo = models.CharField(max_length=50, default='Desconhecido')  # Exemplo de campo para o grupo
+    series = models.PositiveIntegerField(default=10)
+    repeticoes = models.PositiveIntegerField(default=10)
+    carga = models.IntegerField(default=0, verbose_name="Carga (kg)")
+    tempo = models.IntegerField(default=0, verbose_name="Minutos (mn)")  # Tempo de descanso em segundos, por exemplo
 
     def __str__(self):
-        exercicios = ', '.join([exercise.exercicio for exercise in self.exercises.all()])
-        return f"Programa: {self.descricao} | Exercícios: {exercicios}"
+        return f'{self.nome_programa} - {self.grupo}'
     
-    
+
 class Avaliacao(models.Model):
     usuario = models.ForeignKey(User, on_delete=models.CASCADE)
     data = models.DateField()
@@ -58,7 +61,4 @@ class Avaliacao(models.Model):
     panturrilha_esq = models.DecimalField(max_digits=5, decimal_places=2)
 
     def __str__(self):
-        # Usando first_name e last_name do usuário para criar o nome completo
         return f"Avaliação de {self.usuario.first_name} {self.usuario.last_name} | Data: {self.data} | Hora: {self.hora}"
-
-
