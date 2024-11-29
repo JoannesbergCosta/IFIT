@@ -11,7 +11,6 @@ class TaskForm(forms.ModelForm):
             'usuario', 
             "title",
             "description",
-            "programa_treino",
             "start_date",
             "end_date",
             "start_time",
@@ -39,13 +38,5 @@ class TaskForm(forms.ModelForm):
             label="Destinatário do Evento",
             widget=forms.Select(
                 attrs={ "class": "form-select", "aria-label": "Selecionar usuário" }
-            ),
-        )
-        self.fields["programa_treino"] = forms.ModelChoiceField(
-            queryset=TrainingExercicio.objects.all(),
-            required=True,
-            label="Programa de Treinamento",
-            widget=forms.Select(
-                attrs={ "class": "form-select", "aria-label": "Selecionar programa de treino" }
             ),
         )

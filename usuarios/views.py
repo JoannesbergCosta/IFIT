@@ -40,15 +40,25 @@ class PerfilList(ListView):
     paginate_by = 3
 
     def get_queryset(self):
+        # Se o usuário é staff, ele pode ver todos os perfis
         if self.request.user.is_staff:
-            return Perfil.objects.all()  
+            queryset = Perfil.objects.all()
         else:
-            return Perfil.objects.filter(usuario=self.request.user)  
+            # Usuário comum só pode ver o próprio perfil
+            queryset = Perfil.objects.filter(usuario=self.request.user)
+        
+        # Aplicar o filtro de nome_completo, se existir
+        txt_nome = self.request.GET.get('nome_completo')
+        if txt_nome:
+            queryset = queryset.filter(nome_completo__icontains=txt_nome)  # Ajuste aqui
+        
+        return queryset
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
         context['titulo'] = "Lista de Usuários"
         return context
+
 
 
 class PerfilUpdate(UpdateView):

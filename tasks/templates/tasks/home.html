@@ -78,7 +78,6 @@
                                     <th>Tarefa</th>
                                     <th>Data de Início</th>
                                     <th>Data de Término</th>
-                                    <th>Programa de treino</th>
                                     <th>Por</th>
                                 </tr>
                             </thead>
@@ -88,7 +87,6 @@
                                     <td><a href="/task/{{ task.id }}" class="text-decoration-none text-dark">{{ task.title }}</a></td>
                                     <td>{{ task.start_date }}</td>
                                     <td>{{ task.end_date }}</td>
-                                    <td>{{ cadastros.training_exercicio }}</td>
                                     <td>{{ task.usuario.username }}</td>
                                 </tr>
                                 {% endfor %}

@@ -197,6 +197,14 @@ class TrainingExercicioList(LoginRequiredMixin, ListView):
     context_object_name = 'programas'
 
     def get_queryset(self):
+        txt_nome = self.request.GET.get('nome_programa')
+        if txt_nome:
+            programa = TrainingExercicio.objects.filter(nome__icontains=txt_nome)
+        else:
+            programa = TrainingExercicio.objects.all()
+        return programa
+
+    def get_queryset(self):
         if self.request.user.is_staff:
             return TrainingExercicio.objects.all() 
         else:

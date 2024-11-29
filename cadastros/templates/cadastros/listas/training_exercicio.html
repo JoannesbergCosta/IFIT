@@ -12,10 +12,19 @@
         transform: scale(1.05); 
     }
 </style>
+<hr>
 
+<form action="?" method="GET"></form>
+
+    <input type="text" name="nome_programa" id="" value="{{ request.GET.nome_programa }}" class="p-1 border" autocomplete="off" placeholder="Nome ou parte dele">
+
+    <button type="submit" class="btn btn-success">Buscar</button>
+
+    <a href="{% url 'listar-training-exercicios' %}" class="btn btn-light">Limpar</a>
+
+<hr>
 <div class="container mt-5">
     <h3 class="text-center mb-4">Programas de Treino</h3>
-
 
     <div class="text-center mb-4">
         {% if user.is_staff %}
