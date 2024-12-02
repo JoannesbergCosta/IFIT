@@ -37,6 +37,7 @@ class TrainingExercicio(models.Model):
     
 
 class Avaliacao(models.Model):
+    nome_completo = models.CharField(max_length=50, null=True)
     usuario = models.ForeignKey(User, on_delete=models.CASCADE)
     data = models.DateField()
     hora = models.TimeField()  

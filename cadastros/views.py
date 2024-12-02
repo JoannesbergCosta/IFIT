@@ -218,6 +218,15 @@ class AvaliacaoList(LoginRequiredMixin, ListView):
     paginate_by = 1
 
     def get_queryset(self):
+        txt_nome = self.request.GET.get('nome_completo')
+        if txt_nome:
+            programa = Avaliacao.objects.filter(nome__icontains=txt_nome)
+        else:
+            programa = Avaliacao.objects.all()
+        return programa
+    
+
+    def get_queryset(self):
         if self.request.user.is_staff:
             return Avaliacao.objects.all()  
         else:

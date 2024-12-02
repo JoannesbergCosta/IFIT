@@ -5,6 +5,18 @@
 {% block conteudo %}
 <div class="container my-5">
     <h3 class="text-center mb-5">Avaliações</h3>
+    <hr>
+
+    <form action="?" method="GET" class="row g-3 align-items-center justify-content-center mb-4">
+        <div class="col-md-6 col-sm-8">
+            <input type="text" name="nome_completo" value="{{ request.GET.nome_completo }}" class="form-control" autocomplete="off" placeholder="Usuário">
+        </div>
+        <div class="col-md-3 col-sm-4 d-flex justify-content-start">
+            <button type="submit" class="btn btn-success me-2"><i class="fas fa-search"></i> Buscar</button>
+            <a href="{% url 'listar-avaliacoes' %}" class="btn btn-light"><i class="fas fa-times"></i> Limpar</a>
+        </div>
+    </form>
+    <hr>
 
     <div class="d-flex justify-content-between mb-4">
         {% if request.user.is_staff %}
@@ -95,13 +107,26 @@
     <div class="d-flex justify-content-center mt-4">
         <nav aria-label="Paginação">
             <ul class="pagination">
+        
+                
                 {% if page_obj.has_previous %}
-                <li class="page-item">
-                    <a class="page-link" href="?page=1">Primeira</a>
-                </li>
-                <li class="page-item">
-                    <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Anterior</a>
-                </li>
+
+                    {% if request.GET.nome_completo %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page=1&nome_completo={{request.GET.nome_completo}}">&laquo;Primeira</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.previous_page_number }}&nome_completo={{request.GET.nome_completo}}">Anterior</a>
+                    </li>
+                    {% else %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page=1">Primeira</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Anterior</a>
+                    </li>
+                    {% endif %}
+
                 {% endif %}
 
                 <li class="page-item disabled">
@@ -109,12 +134,21 @@
                 </li>
 
                 {% if page_obj.has_next %}
-                <li class="page-item">
-                    <a class="page-link" href="?page={{ page_obj.next_page_number }}">Próxima</a>
-                </li>
-                <li class="page-item">
-                    <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">Última</a>
-                </li>
+                    {% if request.GET.nome_completo %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.next_page_number }}&nome_completo={{request.GET.nome_completo}}">Próxima</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}&nome_completo={{request.GET.nome_completo}}">Última</a>
+                    </li>
+                    {% else %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.next_page_number }}">Próxima</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">Última</a>
+                    </li>
+                    {% endif %}
                 {% endif %}
             </ul>
         </nav>
