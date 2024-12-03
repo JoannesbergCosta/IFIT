@@ -68,6 +68,12 @@
                     <span>Programas de Treino</span>
                 </a>
             </li>
+            <li class="nav-item {% if request.path == '/listar-training-exercicios/' %}active{% endif %}">
+                <a class="nav-link" href="{% url 'progresso_imc' %}">
+                    <i class="fas fa-fw fa-balance-scale"></i>
+                    <span>Meu imc</span>
+                </a>
+            </li>
 
             <!-- Nav Item - Calendário de Tarefas -->
             <li class="nav-item {% if request.path == '/calendar/' %}active{% endif %}">
@@ -255,6 +261,8 @@
                         {% endblock %}
                     </div>
                 </div>
+
+                
 
                 <!-- /.container-fluid -->
                 

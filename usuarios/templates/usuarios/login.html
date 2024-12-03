@@ -20,121 +20,117 @@
     <!-- Bootstrap 5 e estilos personalizados -->
     <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
     <link href="{% static 'css/sb-admin-2.min.css' %}" rel="stylesheet">
-    <link href="{% static 'css/style.css' %}" rel="stylesheet">  <!-- Arquivo de estilo adicional -->
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
 
     <style>
         body {
-            background: linear-gradient(135deg, #00c6ff 0%, #0072ff 100%);
-            color: #fff;
+            background: linear-gradient(to bottom, #00c6ff 0%, #0072ff 100%);
             font-family: 'Poppins', sans-serif;
+            color: #fff;
         }
         
         .card {
-            background-color: rgba(255, 255, 255, 0.95);
-            border-radius: 15px;
+            background: rgba(255, 255, 255, 0.97);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
-
-        .text-gray-900 {
-            color: #343a40 !important;
-        }
-
-        .btn-primary {
-            background-color: #102133;
-            border-color: #007bff;
-        }
-
-        .btn-primary:hover {
-            background-color: #0056b3;
-            border-color: #0056b3;
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
         }
 
         .form-group label {
-            color: #495057;
+            color: #555;
             font-weight: 600;
         }
 
-        a.small {
+        .btn-primary {
+            background: linear-gradient(90deg, #0072ff, #00c6ff);
+            border: none;
+            border-radius: 50px;
+            padding: 12px;
+            transition: background 0.3s, transform 0.2s;
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(90deg, #0056b3, #0066cc);
+            transform: scale(1.05);
+        }
+
+        .text-center h1, .text-center h4 {
+            color: #333;
+            font-weight: 700;
+        }
+
+        .small {
             color: #007bff;
+            font-weight: 600;
             text-decoration: none;
         }
 
-        a.small:hover {
+        .small:hover {
             text-decoration: underline;
         }
     </style>
 </head>
 
-{% if request.user.is_authenticated %}
-    <div class="col-md-8 mx-auto mt-5">
-        <div class="alert alert-danger text-center shadow-lg p-4 rounded">
-            <h3 class="alert-heading mb-3">Ação não permitida</h3>
-            <p class="lead">
-                <strong>
-                    Houve algum problema para processar a ação desejada ou você não tem permissão para isso.
-                </strong>
-            </p>
-            <a href="{% url 'inicio' %}" class="btn btn-outline-secondary mt-3">Voltar à página inicial</a>
-        </div>
-    </div>
-{% else %}
-    <body class="bg-gradient-primary">
+<body class="bg-gradient-primary">
 
-        <div class="container d-flex justify-content-center align-items-center min-vh-100">
-            <!-- Row for login form -->
-            <div class="row w-100 justify-content-center">
-                <div class="col-lg-6 col-md-8 col-sm-10 card o-hidden shadow-lg border-0">
-                    <div class="card-body p-5">
-                        <div class="text-center">
-                            <h1 class="text-gray-900 mb-4">Bem-vindo ao IFIT</h1>
-                            <h4>Acesse o sistema</h4>
-                        </div>
+    <div class="container d-flex justify-content-center align-items-center min-vh-100">
+        <div class="row w-100 justify-content-center">
+            <div class="col-lg-6 col-md-8 col-sm-10 card o-hidden shadow-lg border-0">
+                <div class="card-body p-5">
+                    <div class="text-center mb-4">
+                        <h1>Bem-vindo ao IFIT</h1>
+                        <h4>Acesse o sistema</h4>
+                    </div>
 
-                        <!-- Exibir mensagens de erro -->
-                        {% if form.errors %}
-                            <div class="alert alert-danger">
-                                {% for field in form %}
-                                    {% for error in field.errors %}
-                                        <p>{{ error }}</p>
-                                    {% endfor %}
-                                {% endfor %}
-                                {% for error in form.non_field_errors %}
+                    <!-- Exibir mensagens de erro -->
+                    {% if form.errors %}
+                        <div class="alert alert-danger rounded-pill">
+                            {% for field in form %}
+                                {% for error in field.errors %}
                                     <p>{{ error }}</p>
                                 {% endfor %}
-                            </div>
-                        {% endif %}
-
-                        <!-- Formulário de Login -->
-                        <form class="user" method="post">
-                            {% csrf_token %}
-                            
-                            <div class="form-group mb-4">
-                                <label for="{{ form.username.id_for_label }}" class="form-label">Usuário</label>
-                                {{ form.username }}  <!-- Campo de nome de usuário -->
-                            </div>
-                            
-                            <div class="form-group mb-4">
-                                <label for="{{ form.password.id_for_label }}" class="form-label">Senha</label>
-                                {{ form.password }}  <!-- Campo de senha -->
-                            </div>
-                            
-                            <button type="submit" class="btn btn-primary btn-block btn-lg mt-4">Entrar</button>
-                        </form>
-
-                        <hr>
-                        <div class="text-center">
-                            <a class="small" href="{% url 'password_reset' %}">Esqueceu sua senha?</a>
+                            {% endfor %}
+                            {% for error in form.non_field_errors %}
+                                <p>{{ error }}</p>
+                            {% endfor %}
                         </div>
+                    {% endif %}
+
+                    <!-- Formulário de Login -->
+                    <form class="user" method="post">
+                        {% csrf_token %}
+                        
+                        <div class="form-group mb-4">
+                            <label for="{{ form.username.id_for_label }}" class="form-label">Usuário</label>
+                            {{ form.username }}
+                        </div>
+                        
+                        <div class="form-group mb-4">
+                            <label for="{{ form.password.id_for_label }}" class="form-label">Senha</label>
+                            {{ form.password }}
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary btn-block btn-lg mt-4">Entrar</button>
+                    </form>
+
+                    <hr>
+                    <div class="text-center">
+                        <a class="small" href="{% url 'password_reset' %}">Esqueceu sua senha?</a>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
 
-        <!-- Scripts Bootstrap e customizados -->
-        <script src="{% static 'jquery/jquery.min.js' %}"></script>
-        <script src="{% static 'bootstrap/js/bootstrap.bundle.min.js' %}"></script>
-        <script src="{% static 'js/sb-admin-2.min.js' %}"></script>
+    <!-- Scripts Bootstrap e customizados -->
+    <script src="{% static 'jquery/jquery.min.js' %}"></script>
+    <script src="{% static 'bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'js/sb-admin-2.min.js' %}"></script>
 
-    </body>
-{% endif %}
-
+</body>
 </html>

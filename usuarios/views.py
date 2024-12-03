@@ -8,6 +8,11 @@ from .models import Perfil
 from django.shortcuts import render, redirect
 from django.contrib.auth import logout
 
+from .models import IMCRegistro
+from .forms import IMCForm
+
+from django.contrib.auth.decorators import login_required
+
 
 class UsuarioCreate(CreateView):
     template_name = "cadastros/form_add_user.html"
@@ -81,3 +86,30 @@ class PerfilUpdate(UpdateView):
 def custom_logout_view(request):
     logout(request)
     return redirect('login')
+
+
+@login_required
+def calcular_imc(request):
+    if request.method == 'POST':
+        form = IMCForm(request.POST)
+        if form.is_valid():
+            imc_registro = form.save(commit=False)
+            imc_registro.user = request.user
+            imc_registro.save()
+            return redirect('progresso_imc')
+    else:
+        form = IMCForm()
+    return render(request, 'calcular_imc.html', {'form': form})
+
+@login_required
+def progresso_imc(request):
+    registros = IMCRegistro.objects.filter(user=request.user).order_by('-data_registro')
+    return render(request, 'progresso_imc.html', {'registros': registros})
+
+def apagar_imc(request, imc_id):
+    
+    imc_registro = get_object_or_404(IMCRegistro, id=imc_id, user=request.user) 
+    
+    imc_registro.delete()
+    
+    return redirect('progresso_imc')

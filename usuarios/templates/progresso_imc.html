@@ -1,0 +1,64 @@
+{% extends 'paginas/index.html' %}
+
+{% block conteudo %}
+  <h2 class="text-center my-4">Progresso do IMC</h2>
+  <div class="d-flex justify-content-between mb-4">
+    <a href="{% url 'calcular_imc' %}" class="btn btn-primary btn-sm">Calcule o seu IMC</a>
+    </div>
+
+  <div class="table-responsive">
+    <table class="table table-striped table-bordered">
+      <thead class="thead-dark">
+        <tr>
+          <th>Peso (kg)</th>
+          <th>Altura (m)</th>
+          <th>IMC</th>
+          <th>Data</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for registro in registros %}
+          <tr>
+            <td>{{ registro.peso }}</td>
+            <td>{{ registro.altura }}</td>
+            <td>{{ registro.imc|floatformat:2 }}</td>
+            <td>{{ registro.data_registro|date:"d/m/Y" }}</td>
+            <td>
+              <a href="{% url 'apagar_imc' imc_id=registro.id %}" 
+                 class="btn btn-danger btn-sm"
+                 onclick="return confirm('Tem certeza de que deseja apagar este registro de IMC?');">
+                 Apagar
+              </a>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+
+  <div class="mt-5">
+    <h3 class="text-center">Categorias de IMC</h3>
+    <ul class="list-group">
+      <li class="list-group-item">
+        <strong>Acima de 40,0:</strong> Obesidade grau III - Aqui o sinal é vermelho, com forte probabilidade de já existirem doenças muito graves associadas. O tratamento deve ser ainda mais urgente.
+      </li>
+      <li class="list-group-item">
+        <strong>Entre 35,0 e 39,9:</strong> Obesidade grau II - Mesmo que seus exames aparentem estar normais, é hora de se cuidar, iniciando mudanças no estilo de vida com o acompanhamento próximo de profissionais de saúde.
+      </li>
+      <li class="list-group-item">
+        <strong>Entre 30,0 e 34,9:</strong> Obesidade grau I - Sinal de alerta! Chegou na hora de se cuidar, mesmo que seus exames sejam normais. Vamos dar início a mudanças hoje! Cuide de sua alimentação. Você precisa iniciar um acompanhamento com nutricionista e/ou endocrinologista.
+      </li>
+      <li class="list-group-item">
+        <strong>Entre 25,0 e 29,9:</strong> Sobrepeso - Ele é, na verdade, uma pré-obesidade e muitas pessoas nessa faixa já apresentam doenças associadas, como diabetes e hipertensão. Importante rever hábitos e buscar ajuda antes de, por uma série de fatores, entrar na faixa da obesidade pra valer.
+      </li>
+      <li class="list-group-item">
+        <strong>Entre 18,6 e 24,9:</strong> Normal - Que bom que você está com o peso normal! E o melhor jeito de continuar assim é mantendo um estilo de vida ativo e uma alimentação equilibrada.
+      </li>
+      <li class="list-group-item">
+        <strong>18,5 ou menos:</strong> Abaixo do normal - Procure um médico. Algumas pessoas têm um baixo peso por características do seu organismo e tudo bem. Outras podem estar enfrentando problemas, como a desnutrição. É preciso saber qual é o caso.
+      </li>
+    </ul>
+  </div>
+{% endblock %}

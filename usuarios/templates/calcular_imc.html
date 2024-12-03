@@ -1,0 +1,15 @@
+{% extends 'paginas/index.html' %}
+{% load crispy_forms_tags %}
+
+{% block conteudo %}
+<div class="container mt-5">
+    <h2 class="text-center text-primary">Calcular IMC</h2>
+    <div class="card shadow-lg p-4">
+        <form method="post">
+            {% csrf_token %}
+            {{ form|crispy }}
+            <button type="submit" class="btn btn-primary btn-block mt-4">Calcular</button>
+        </form>
+    </div>
+</div>
+{% endblock %}
