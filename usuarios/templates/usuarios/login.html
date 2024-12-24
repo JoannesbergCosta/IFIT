@@ -20,7 +20,7 @@
     <!-- Bootstrap 5 e estilos personalizados -->
     <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
     <link href="{% static 'css/sb-admin-2.min.css' %}" rel="stylesheet">
-    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+    <link href="{% static 'css/sb-admin-2.css' %}" rel="stylesheet">
 
     <style>
         body {
@@ -102,7 +102,7 @@
                     {% endif %}
 
                     <!-- Formulário de Login -->
-                    <form class="user" method="post">
+                    <form class="user form-container" method="post">
                         {% csrf_token %}
                         
                         <div class="form-group mb-4">

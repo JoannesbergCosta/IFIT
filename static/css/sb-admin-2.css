@@ -11297,7 +11297,6 @@ body.sidebar-toggled footer.sticky-footer {
   background-color: #45a049; /* Muda a cor ao passar o mouse */
 }
 
-
  /* Seleciona o botão pela classe */
 .login-btn {
   background-color: #224abe ; /* Cor de fundo */
@@ -11316,16 +11315,11 @@ body.sidebar-toggled footer.sticky-footer {
   background-color: #8ed6ff; /* Cor de fundo ao passar o mouse */
 }
 
-.login-container {
-  display: flex; /* Ativa o flexbox */
-  justify-content: center; /* Centraliza horizontalmente */
-  align-items: center; /* Centraliza verticalmente */
-  height: 100vh; /* Altura da tela inteira */
-}
-
-.login-form {
-  width: 350px;
-  height: 430px;
+.form-container {
+  padding: 20px;
+  border-radius: 8px;
+  width: auto;
+  text-align: center;
 }
 
 .box-input {
